@@ -2,12 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // *Getting the pages components:
-import LoadingPage from './loading.vue'
+import LoadingPage from './loading'
+import IndexPage   from './index'
+import ListConnections from '../views/list-connections'
+
 
 // *Registering vue-router:
 Vue.use(VueRouter);
-
-console.log(LoadingPage);
 
 // *Building and exporting the router:
 export default new VueRouter({
@@ -15,8 +16,16 @@ export default new VueRouter({
    routes: [
       {
          name: 'loading',
-         path: '/',
+         path: '/loading',
          component: LoadingPage
+      },
+      {
+         name: 'index',
+         path: '/index',
+         component: IndexPage,
+         children: [
+            { path: '/list-connections', component: ListConnections }
+         ]
       }
    ]
 });

@@ -1,6 +1,6 @@
 <template>
    <div class="loading-page">
-
+      <span class="-message">{{ message }}</span>
    </div>
 </template>
 
@@ -12,8 +12,12 @@ export default {
 
    data(){
       return {
-         curr_loading_message: ''
+         message: ''
       };
+   },
+
+   mounted(){
+      this.load();
    },
 
    methods: {
@@ -23,8 +27,10 @@ export default {
       },
 
       async load(){
-         this.curr_loading_message = 'Loading preferences';
-         await loadPreferences();
+         this.message = 'Loading preferences';
+         await this.loadPreferences();
+
+         this.$router.push('index');
       }
 
    }
@@ -35,7 +41,10 @@ export default {
 
 <style>
 .loading-page{
-   display: grid;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
    width: 100%;
    height: 100%;
 

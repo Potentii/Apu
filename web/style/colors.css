@@ -16,6 +16,8 @@
 
    --m-cyan-a200: #18FFFF;
 
+   --m-light-green-a400: #76FF03;
+
    --m-grey-50: #FAFAFA;
    --m-grey-100: #F5F5F5;
    --m-grey-200: #EEEEEE;
@@ -58,8 +60,8 @@
    --link-fg--visited: var(--m-blue-700);
 
    /* Text selection */
-   --selection-bg: var(--m-pink-a200);
-   --selection-fg: var(--m-grey-50);
+   --selection-bg: var(--m-light-green-a400);
+   --selection-fg: var(--m-grey-900);
 }
 
 

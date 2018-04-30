@@ -43,3 +43,8 @@ button:hover{
    color: var(--selection-fg);
    text-shadow: inherit;
 }
+
+html, body{
+   width: 100%;
+   height: 100%;
+}

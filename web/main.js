@@ -1,11 +1,15 @@
 import Vue from 'vue'
-import router from './pages/router'
-import store from './state/store'
 
-Vue.config.productionTip = false;
+import App    from './app.vue'
+import router from './pages/router'
+import store  from './state/store'
+
+Vue.config.productionTip = true;
 
 new Vue({
-   el: 'app',
    router,
-   store
-});
+   store,
+   render: h => h(App)
+}).$mount('#app');
+
+router.replace('loading');

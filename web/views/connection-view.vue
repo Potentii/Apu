@@ -1,15 +1,14 @@
 <template>
-   <div class="list-queues-view">
-      <h1 class="-title">Queues of <span class="-conn-name">{{ $route.params.conn_name }}</span></h1>
-      <ul class="-list">
-         <router-link
-            class="-item"
-            tag="li"
-            :to="'/index/connections/' + $route.params.conn_name + '/queues/' + queue.name"
-            v-for="queue in queues">
-            <span class="-name">{{ queue.name }}</span>
-         </router-link>
-      </ul>
+   <div class="connection-view">
+      
+      <router-link
+         class="-item"
+         tag="button"
+         :to="'/index/connections/' + $route.params.conn_name + '/edit'">
+         Edit
+      </router-link>
+
+      <!-- TODO queues list -->
    </div>
 </template>
 
@@ -17,16 +16,14 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import Queue from '../types/queue'
 
 export default {
 
-   name: 'list-queues-view',
+   name: 'connection-view',
 
    data(){
       return {
-         conn: null,
-         queues: []
+         conn: null
       };
    },
 
@@ -45,28 +42,14 @@ export default {
          'setSelectedConnection'
       ]),
 
-      loadQueues(){
-         this.queues = [
-            new Queue('queue-1'),
-            new Queue('queue-2'),
-            new Queue('queue-3'),
-            new Queue('queue-4'),
-            new Queue('queue-5')
-         ];
-      },
-
       load(){
-         try{
-            const conn_name = this.$route.params.conn_name;
-            this.conn = this.getSavedConnections().find(c => c.name === conn_name);
-            if(!this.conn)
-               throw new Error(`Could not load connection "${conn_name}"`);
-            this.setSelectedConnection(conn_name);
-            this.loadQueues();
-         } catch(err){
-            console.error(err);
-            this.setSelectedConnection(null);
-         }
+         // *Getting the connection name from the navigation parameter:
+         const conn_name = this.$route.params.conn_name;
+         // *Checking if the informed connection name represent a known connection:
+         if(!this.getSavedConnections().some(c => c.name === conn_name))
+            // *If it doesn't:
+            // *Sending the user back to the connections selection page:
+            this.$router.replace({ path: '/connections', params: { error: new Error(`Connection "${conn_name}" not found`) } });
       }
    }
 

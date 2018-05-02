@@ -6,14 +6,14 @@
 
          <!-- * Connection selection link * -->
          <router-link class="-item" to="/index/connections">
-            {{ getSelectedConnection() ? getSelectedConnection().name : 'Connections' }}
+            {{ getSelectedConnection() ? getSelectedConnection() : 'Connections' }}
          </router-link>
 
          <!-- * Queue selection link * -->
          <template v-if="getSelectedConnection()">
             <i class="-arrow material-icons">keyboard_arrow_right</i>
-            <router-link class="-item" to="/index/queues">
-               {{ getSelectedQueue() ? getSelectedQueue().name : 'Queue' }}
+            <router-link class="-item" :to="'/index/connections/' + getSelectedConnection() + '/queues'">
+               {{ getSelectedQueue() ? getSelectedQueue() : 'Queues' }}
             </router-link>
          </template>
 
@@ -57,7 +57,7 @@ export default {
 
    mounted(){
       if(!this.getSelectedConnection())
-         this.$router.replace('/index/list-connections');
+         this.$router.replace('/index/connections');
    },
 
    methods: {
@@ -81,6 +81,8 @@ export default {
    height: 100%;
 }
 .index-page > .-nav{
+   flex-shrink: 0;
+
    display: flex;
    flex-direction: row;
    padding: 0.6em 1em;
@@ -96,5 +98,10 @@ export default {
    font-size: 1.3em;
    opacity: 0.3;
    margin: 0 0.5em;
+}
+
+
+.index-page-router-view{
+   overflow: auto;
 }
 </style>

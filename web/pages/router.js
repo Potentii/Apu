@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import LoadingPage from './loading'
 import IndexPage   from './index'
 import ListConnections from '../views/list-connections'
+import ListQueues from '../views/list-queues'
 
 
 // *Registering vue-router:
@@ -24,7 +25,8 @@ export default new VueRouter({
          path: '/index',
          component: IndexPage,
          children: [
-            { path: '/list-connections', component: ListConnections }
+            { path: 'connections', component: ListConnections },
+            { path: 'connections/:conn_name/queues', component: ListQueues }
          ]
       }
    ]

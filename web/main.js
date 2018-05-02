@@ -12,4 +12,4 @@ new Vue({
    render: h => h(App)
 }).$mount('#app');
 
-router.replace('loading');
+router.replace('/loading');

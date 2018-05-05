@@ -6,6 +6,8 @@
 
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
 
    name: 'loading-page',
@@ -21,6 +23,9 @@ export default {
    },
 
    methods: {
+      ...mapMutations([
+         'markAsLoaded'
+      ]),
 
       async loadPreferences(){
 
@@ -30,6 +35,7 @@ export default {
          this.message = 'Loading preferences';
          await this.loadPreferences();
 
+         this.markAsLoaded();
          this.$router.push('index');
       }
 

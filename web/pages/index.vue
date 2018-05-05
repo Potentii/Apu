@@ -6,14 +6,14 @@
 
          <!-- * Connection selection link * -->
          <router-link class="-item" to="/index/connections">
-            {{ getSelectedConnection() ? getSelectedConnection() : 'Connections' }}
+            {{ getSelectedConnection() ? getSelectedConnection().name : 'Connections' }}
          </router-link>
 
          <!-- * Queue selection link * -->
          <template v-if="getSelectedConnection()">
             <i class="-arrow material-icons">keyboard_arrow_right</i>
-            <router-link class="-item" :to="'/index/connections/' + getSelectedConnection() + '/queues'">
-               {{ getSelectedQueue() ? getSelectedQueue() : 'Queues' }}
+            <router-link class="-item" :to="'/index/connections/' + getSelectedConnection().name">
+               {{ getSelectedQueue() ? getSelectedQueue().name : 'Queues' }}
             </router-link>
          </template>
 

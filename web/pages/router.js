@@ -4,15 +4,15 @@ import VueRouter from 'vue-router'
 // *Getting the pages components:
 import LoadingPage from './loading'
 import IndexPage   from './index'
-import ListConnections from '../views/list-connections'
-import ListQueues from '../views/list-queues'
+import Home from '../views/home'
+import Connection from '../views/connection'
 
 
 // *Registering vue-router:
 Vue.use(VueRouter);
 
-// *Building and exporting the router:
-export default new VueRouter({
+// *Building the router:
+const router = new VueRouter({
    mode: 'history',
    routes: [
       {
@@ -25,9 +25,19 @@ export default new VueRouter({
          path: '/index',
          component: IndexPage,
          children: [
-            { path: 'connections', component: ListConnections },
-            { path: 'connections/:conn_name/queues', component: ListQueues }
+            { path: 'connections', component: Home },
+            { path: 'connections/:conn_name', component: Connection }
          ]
       }
    ]
 });
+
+router.beforeEach((from, to, next) => {
+   if(from === null && to.namd !== 'loading')
+      next({ name: 'loading', replace: true, params: { redirect_to: to } })
+   else
+      next();
+
+});
+
+export default router;

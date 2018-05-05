@@ -1,11 +1,16 @@
 <template>
-   <div class="list-queues-view">
-      <h1 class="-title">Queues of <span class="-conn-name">{{ $route.params.conn_name }}</span></h1>
-      <ul class="-list">
+   <div class="list-queues">
+      <div class="-on-loading" v-if="loading">
+         Loading...
+      </div>
+      <div class="-on-empty" v-if="!loading && !queues.length">
+         No queues found
+      </div>
+      <ul class="-list" v-if="!loading && queues.length">
          <router-link
             class="-item"
             tag="li"
-            :to="'/index/connections/' + $route.params.conn_name + '/queues/' + queue.name"
+            :to="'/index/connections/' + conn.name + '/queues/' + queue.name"
             v-for="queue in queues">
             <span class="-name">{{ queue.name }}</span>
          </router-link>
@@ -16,35 +21,32 @@
 
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import Connection from '../types/connection'
 import Queue from '../types/queue'
 
 export default {
 
-   name: 'list-queues-view',
+   name: 'list-queues',
+
+   props: {
+      'conn': {
+         type: Connection,
+         required: true
+      }
+   },
 
    data(){
       return {
-         conn: null,
+         loading: false,
          queues: []
       };
    },
 
-   computed: {
-      ...mapGetters([
-         'getSavedConnections'
-      ])
-   },
-
-   mounted(){
+   beforeMount(){
       this.load();
    },
 
    methods: {
-      ...mapMutations([
-         'setSelectedConnection'
-      ]),
-
       loadQueues(){
          this.queues = [
             new Queue('queue-1'),
@@ -56,17 +58,15 @@ export default {
       },
 
       load(){
+         this.loading = true;
+
          try{
-            const conn_name = this.$route.params.conn_name;
-            this.conn = this.getSavedConnections().find(c => c.name === conn_name);
-            if(!this.conn)
-               throw new Error(`Could not load connection "${conn_name}"`);
-            this.setSelectedConnection(conn_name);
             this.loadQueues();
          } catch(err){
             console.error(err);
-            this.setSelectedConnection(null);
          }
+
+         this.loading = false;
       }
    }
 
@@ -76,20 +76,20 @@ export default {
 
 
 <style>
-.list-queues-view > * {
+.list-queues > * {
    padding-left: 1rem;
    padding-right: 1rem;
 }
-.list-queues-view > .-title{
+.list-queues > .-title{
    font-size: 1.4em;
    font-weight: normal;
 }
-.list-queues-view > .-title > .-conn-name{
+.list-queues > .-title > .-conn-name{
    font-weight: bold;
    font-family: 'Roboto Medium';
 }
 
-.list-queues-view > .-list > .-item{
+.list-queues > .-list > .-item{
    display: grid;
    grid-template-columns: 1fr;
    grid-template-rows: 1fr 1fr;
@@ -99,7 +99,7 @@ export default {
 
    padding: 0.5em 1em;
 }
-.list-queues-view > .-list > .-item::after{
+.list-queues > .-list > .-item::after{
    content: '';
    postion: absolute;
    width: 100%;
@@ -108,15 +108,15 @@ export default {
    left: 0;
    background-color: rgba(0,0,0,0.1);
 }
-.list-queues-view > .-list > .-item > .-location{
+.list-queues > .-list > .-item > .-location{
    grid-area: location;
 }
-.list-queues-view > .-list > .-item > .-name{
+.list-queues > .-list > .-item > .-name{
    grid-area: name;
 }
 
 
-.list-queues-view > .-list > .-item > .-name{
+.list-queues > .-list > .-item > .-name{
    font-size: 1.2em;
    font-weight: bold;
 }

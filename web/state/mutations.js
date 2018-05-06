@@ -1,4 +1,5 @@
 import Connection from '../types/connection'
+import Queue      from '../types/queue'
 
 export default {
 
@@ -13,6 +14,15 @@ export default {
          throw new TypeError(`Invalid type of connection`);
       else
          state.selected_connection = conn;
+   },
+
+   setSelectedQueue(state, queue){
+      if(queue === null || queue === undefined)
+         state.selected_queue = null;
+      else if(!(queue instanceof Queue))
+         throw new TypeError(`Invalid type of queue`);
+      else
+         state.selected_queue = queue;
    },
 
    clearSavedConnections(state){

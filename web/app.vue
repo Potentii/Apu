@@ -1,8 +1,20 @@
 <template>
-   <div id="app">
+   <div id="app" @message="onMessage($event)">
       <router-view/>
    </div>
 </template>
+
+<script>
+export default {
+   name: 'app',
+
+   methods: {
+      onMessage(e){
+         console.log('message: ' + e);
+      }
+   }
+}
+</script>
 
 <style>
 #app{

@@ -10,18 +10,10 @@
          </router-link>
 
          <!-- * Queue selection link * -->
-         <template v-if="getSelectedConnection()">
+         <template v-if="getSelectedConnection() && getSelectedQueue()">
             <i class="-arrow material-icons">keyboard_arrow_right</i>
             <router-link class="-item" :to="'/index/connections/' + getSelectedConnection().name">
-               {{ getSelectedQueue() ? getSelectedQueue().name : 'Queues' }}
-            </router-link>
-         </template>
-
-         <!-- * New message form link * -->
-         <template v-if="getSelectedQueue()">
-            <i class="-arrow material-icons">keyboard_arrow_right</i>
-            <router-link class="-item" to="/index/new-message">
-               New message
+               {{ getSelectedQueue().name }}
             </router-link>
          </template>
 
@@ -43,27 +35,11 @@ export default {
 
    name: 'index-page',
 
-   data(){
-      return {
-      };
-   },
-
    computed: {
       ...mapGetters([
          'getSelectedConnection',
          'getSelectedQueue'
       ])
-   },
-
-   mounted(){
-      if(!this.getSelectedConnection())
-         this.$router.replace('/index/connections');
-   },
-
-   methods: {
-      load(){
-
-      }
    }
 
 }

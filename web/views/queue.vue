@@ -1,19 +1,14 @@
 <template>
-   <div class="connection-view">
-      <template v-if="getSelectedConnection()">
-         <router-link
-            class="-item"
-            tag="button"
-            :to="'/index/connections/' + getSelectedConnection().name + '/edit'">
-            Edit
-         </router-link>
-
-         <h1>Queues</h1>
-
-         <list-queues :conn="getSelectedConnection()"/>
+   <div class="queue-view">
+      <template v-if="getSelectedQueue()">
+         <h1>Send a message</h1>
+         <form class="-send-message-form">
+            <input type="text" placeholder="Correlation ID" v-model="form.correlation_id"/>
+            <textarea rows="20" cols="80" v-model="form.message"></textarea>
+         </form>
       </template>
       <template v-else>
-         Loading connection info...
+         Loading queue info...
       </template>
    </div>
 </template>
@@ -22,25 +17,27 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import ListQueues from '../compositions/list-queues'
+import Queue from '../types/queue'
 
 export default {
 
-   name: 'connection-view',
-
-   components: {
-      'list-queues': ListQueues
-   },
+   name: 'queue-view',
 
    data(){
-      return { };
+      return {
+         form: {
+            correlation_id: '',
+            message: ''
+         }
+      };
    },
 
    computed: {
       ...mapGetters([
          'getSavedConnection',
          'getSavedConnections',
-         'getSelectedConnection'
+         'getSelectedConnection',
+         'getSelectedQueue'
       ])
    },
 
@@ -55,9 +52,6 @@ export default {
       ]),
 
       load(){
-         // *Cleaning the selected queue:
-         this.setSelectedQueue(null);
-
          // *Getting the connection name from the navigation parameter:
          const conn_name = this.$route.params.conn_name;
 
@@ -72,6 +66,14 @@ export default {
             // *Sending the user back to the connections selection page:
             this.$router.push({ name: 'connections' });
          }
+
+         // *Getting the queue name from the navigation parameter:
+         const queue_name = this.$route.params.queue_name;
+
+         if(queue_name)
+            this.setSelectedQueue(new Queue(queue_name));
+         else
+            this.setSelectedQueue(null);
       }
    }
 

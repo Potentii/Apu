@@ -1,6 +1,6 @@
 <template>
-   <div class="connection-view">
-      <h1>Connections</h1>
+   <div class="connections-view">
+      <h1 class="-view-section-title">Connections</h1>
       <list-connections :conns="getSavedConnections()"/>
    </div>
 </template>
@@ -48,4 +48,8 @@ export default {
 
 
 <style>
+.connections-view > .list-connections{
+   padding-top: 1rem;
+   padding-bottom: 4rem;
+}
 </style>

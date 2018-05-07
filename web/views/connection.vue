@@ -1,14 +1,14 @@
 <template>
    <div class="connection-view">
       <template v-if="getSelectedConnection()">
-         <router-link
+         <!-- <router-link
             class="-item"
             tag="button"
             :to="'/index/connections/' + getSelectedConnection().name + '/edit'">
             Edit
-         </router-link>
+         </router-link> -->
 
-         <h1>Queues</h1>
+         <h1 class="-view-section-title">Queues</h1>
 
          <list-queues :conn="getSelectedConnection()"/>
       </template>
@@ -81,4 +81,8 @@ export default {
 
 
 <style>
+.connection-view > .list-queues{
+   padding-top: 1rem;
+   padding-bottom: 4rem;
+}
 </style>

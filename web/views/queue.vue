@@ -1,15 +1,23 @@
 <template>
    <div class="queue-view">
-      <template v-if="getSelectedQueue()">
-         <h1>Send a message</h1>
+
+      <template v-if="getSelectedConnection() && getSelectedQueue()">
+         <h1 class="-view-section-title">New message</h1>
          <form class="-send-message-form">
-            <input type="text" placeholder="Correlation ID" v-model="form.correlation_id"/>
-            <textarea rows="20" cols="80" v-model="form.message"></textarea>
+
+            <label class="-label">Correlation ID</label>
+            <input class="-input -corr-id" type="text" v-model="form.correlation_id"/>
+
+            <label class="-label">Message</label>
+            <textarea class="-input -message" v-model="form.message"></textarea>
+
          </form>
       </template>
+
       <template v-else>
          Loading queue info...
       </template>
+
    </div>
 </template>
 
@@ -83,4 +91,41 @@ export default {
 
 
 <style>
+.queue-view > .-send-message-form{
+   display: flex;
+   flex-direction: column;
+   padding: 1rem var(--h-padding) 4rem var(--h-padding);
+}
+
+.queue-view > .-send-message-form > .-label{
+   font-size: 0.9em;
+   color: var(--m-grey-700);
+   margin-bottom: 0.6em;
+}
+
+.queue-view > .-send-message-form > .-input{
+   font-size: 0.8em;
+   padding: 0.6em 1em;
+   background-color: var(--m-grey-50);
+   border-radius: 2px;
+   margin-bottom: 2em;
+   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.06);
+
+   transition: box-shadow 0.2s ease;
+} .queue-view > .-send-message-form > .-input:hover{
+   box-shadow: 0 4px 3px -1px rgba(0, 0, 0, 0.2);
+} .queue-view > .-send-message-form > .-input:focus{
+   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.13);
+}
+
+.queue-view > .-send-message-form > .-input.-message{
+   white-space: nowrap;
+   resize: vertical;
+   min-height: 10em;
+   height: 25em;
+}
+.queue-view > .-send-message-form > .-input.-corr-id,
+.queue-view > .-send-message-form > .-input.-message{
+   font-family: 'Roboto Mono';
+}
 </style>

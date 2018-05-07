@@ -12,7 +12,9 @@
             tag="li"
             :to="'/index/connections/' + conn.name + '/queues/' + queue.name"
             v-for="queue in queues">
-            <span class="-name">{{ queue.name }}</span>
+            <div class="-container">
+               <span class="-name">{{ queue.name }}</span>
+            </div>
          </router-link>
       </ul>
    </div>
@@ -76,48 +78,34 @@ export default {
 
 
 <style>
-.list-queues > * {
-   padding-left: 1rem;
-   padding-right: 1rem;
-}
-.list-queues > .-title{
-   font-size: 1.4em;
-   font-weight: normal;
-}
-.list-queues > .-title > .-conn-name{
-   font-weight: bold;
-   font-family: 'Roboto Medium';
+.list-queues > .-list{
+   border-radius: 3px;
+   overflow: hidden;
+   background-color: var(--m-grey-50);
+   margin: 0 var(--h-padding) 1em var(--h-padding);
 }
 
 .list-queues > .-list > .-item{
-   display: grid;
-   grid-template-columns: 1fr;
-   grid-template-rows: 1fr 1fr;
-   grid-template-areas:
-      'location'
-      'name';
-
-   padding: 0.5em 1em;
+   padding: 0.8em 1em;
+   transition: background-color 0.2s ease;
+} .list-queues > .-list > .-item:hover{
+   cursor: pointer;
+   background-color: var(--m-grey-100);
 }
-.list-queues > .-list > .-item::after{
+.list-queues > .-list > .-item::before{
    content: '';
-   postion: absolute;
+   position: absolute;
    width: 100%;
    height: 1px;
    bottom: 0;
    left: 0;
-   background-color: rgba(0,0,0,0.1);
-}
-.list-queues > .-list > .-item > .-location{
-   grid-area: location;
-}
-.list-queues > .-list > .-item > .-name{
-   grid-area: name;
+   background-color: var(--m-grey-200);
+   transition: opacity 0.2s ease;
 }
 
-
-.list-queues > .-list > .-item > .-name{
-   font-size: 1.2em;
-   font-weight: bold;
+.list-queues > .-list > .-item > .-container > .-name{
+   font-size: 1em;
+   text-transform: uppercase;
+   letter-spacing: 0.02em;
 }
 </style>

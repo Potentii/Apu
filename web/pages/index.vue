@@ -4,24 +4,32 @@
       <!-- * Navigation breadcrumb * -->
       <nav class="-nav">
 
-         <!-- * Connection selection link * -->
-         <router-link class="-item" to="/index/connections">
-            {{ getSelectedConnection() ? getSelectedConnection().name : 'Connections' }}
+         <!-- * Home link * -->
+         <router-link class="-item -logo" to="/index/connections">
+            <!-- TODO add icon -->
+            <span class="-text">Apu</span>
          </router-link>
 
-         <!-- * Queue selection link * -->
-         <template v-if="getSelectedConnection() && getSelectedQueue()">
-            <i class="-arrow material-icons">keyboard_arrow_right</i>
+         <!-- * Connection link * -->
+         <template v-if="getSelectedConnection()">
+            <i class="-arrow material-icons">navigate_next</i>
             <router-link class="-item" :to="'/index/connections/' + getSelectedConnection().name">
+               {{ getSelectedConnection().name }}
+            </router-link>
+         </template>
+
+         <!-- * Queue link * -->
+         <template v-if="getSelectedConnection() && getSelectedQueue()">
+            <i class="-arrow material-icons">navigate_next</i>
+            <router-link class="-item" :to="'/index/connections/' + getSelectedConnection().name + '/queues/' + getSelectedQueue().name">
                {{ getSelectedQueue().name }}
             </router-link>
          </template>
 
       </nav>
 
-
       <!-- * Navigation view * -->
-      <router-view class="index-page-router-view"/>
+      <router-view class="-router"/>
 
    </div>
 </template>
@@ -55,29 +63,68 @@ export default {
 
    width: 100%;
    height: 100%;
+
+   --h-padding: 1rem;
 }
+
+
+/**
+ * Breadcrumb
+ */
 .index-page > .-nav{
    flex-shrink: 0;
-
    display: flex;
    flex-direction: row;
-   padding: 0.6em 1em;
+   align-items: stretch;
+   /* padding: 0.6em calc(var(--h-padding) * 2 / 3); */
+   padding: 0.6em var(--h-padding);
 }
-.index-page > .-nav > *{
-   vertical-align: middle;
+
+.index-page > .-nav > .-item,
+.index-page > .-nav > .-arrow {
+   display: flex;
+   align-items: center;
 }
+
+/**
+ * Breadcrumb items
+ */
 .index-page > .-nav > .-item{
-   text-transform: uppercase;
+   padding: 0.1rem 0;
    letter-spacing: 0.05em;
+   color: var(--m-grey-900);
+
+   transition: box-shadow 0.15s ease;
+} .index-page > .-nav > .-item.-logo{
+   font-size: 1.3em;
+   font-family: 'Roboto Medium';
+} .index-page > .-nav > .-item:not(.-logo){
+   text-transform: uppercase;
+} .index-page > .-nav > .-item:hover:not(:last-of-type){
+   cursor: pointer;
+} .index-page > .-nav > .-item:hover,
+  .index-page > .-nav > .-item:last-of-type{
+   box-shadow: 0 3px 0 rgba(0, 0, 0, 1);
 }
+
+/**
+ * Breadcrumb separators
+ */
 .index-page > .-nav > .-arrow{
    font-size: 1.3em;
-   opacity: 0.3;
-   margin: 0 0.5em;
+   margin: 0 0.3rem;
+   color: var(--m-grey-400);
 }
 
 
-.index-page-router-view{
+.index-page > .-router{
    overflow: auto;
+}
+
+.index-page > .-router > .-view-section-title{
+   font-family: 'Roboto Medium';
+   letter-spacing: 0.03em;
+   font-size: 1.5em;
+   padding: 0.1em var(--h-padding);
 }
 </style>

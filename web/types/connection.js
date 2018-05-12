@@ -1,5 +1,8 @@
-export default class Connection{
+import Entity from './entity.js'
+
+export default class Connection extends Entity{
    constructor(name, host, port, queue_manager, channel){
+      super('abcd');
       this.name = name;
       this.host = host;
       this.port = port;

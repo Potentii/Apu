@@ -6,9 +6,10 @@ import LoadingPage from './loading'
 import IndexPage   from './index'
 
 // *Getting the pages' view components:
-import Connections from '../views/connections'
-import Connection  from '../views/connection'
-import Queue       from '../views/queue'
+import NewConnection from '../views/new-connection'
+import Connections   from '../views/connections'
+import Connection    from '../views/connection'
+import Queue         from '../views/queue'
 
 
 // *Registering vue-router:
@@ -29,9 +30,10 @@ const router = new VueRouter({
          path: '/index',
          component: IndexPage,
          children: [
-            { name: 'connections', path: 'connections',                               component: Connections },
-            { name: 'connection',  path: 'connections/:conn_name',                    component: Connection },
-            { name: 'queue',       path: 'connections/:conn_name/queues/:queue_name', component: Queue }
+            { name: 'connections',    path: 'connections',                               component: Connections },
+            { name: 'new-connection', path: 'connections/new',                           component: NewConnection },
+            { name: 'connection',     path: 'connections/:conn_name',                    component: Connection },
+            { name: 'queue',          path: 'connections/:conn_name/queues/:queue_name', component: Queue }
          ]
       }
    ]

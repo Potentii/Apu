@@ -12,6 +12,11 @@
             <textarea class="-input -message" v-model="form.message"></textarea>
 
          </form>
+
+         <ul class="fab-list">
+            <router-link class="fab --raised" tag="button" :to="{ name: 'add-connection' }">O</router-link>
+            <button class="fab --raised" type="button">O</button>
+         </ul>
       </template>
 
       <template v-else>
@@ -91,6 +96,12 @@ export default {
 
 
 <style>
+
+.queue-view{
+   --fab-background-color: #d23;
+   --fab-foreground-color: #FAFAFA;
+}
+
 .queue-view > .-send-message-form{
    display: flex;
    flex-direction: column;

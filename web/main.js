@@ -3,6 +3,7 @@ import Vue from 'vue'
 import App    from './app.vue'
 import router from './pages/router'
 import store  from './state/store'
+import id     from './plugins/id'
 
 Vue.config.productionTip = true;
 

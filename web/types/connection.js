@@ -1,4 +1,4 @@
-import Entity from './entity.js'
+import Entity from './entity'
 
 export default class Connection extends Entity{
    constructor(name, host, port, queue_manager, channel){

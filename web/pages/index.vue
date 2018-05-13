@@ -12,16 +12,16 @@
 
          <!-- * Connection link * -->
          <template v-if="getSelectedConnection()">
-            <i class="-arrow material-icons">navigate_next</i>
-            <router-link class="-item" :to="'/index/connections/' + getSelectedConnection().name">
+            <i class="-arrow material-icons -fade-in">navigate_next</i>
+            <router-link class="-item -fade-in" :to="'/index/connections/' + getSelectedConnection().name">
                {{ getSelectedConnection().name }}
             </router-link>
          </template>
 
          <!-- * Queue link * -->
          <template v-if="getSelectedConnection() && getSelectedQueue()">
-            <i class="-arrow material-icons">navigate_next</i>
-            <router-link class="-item" :to="'/index/connections/' + getSelectedConnection().name + '/queues/' + getSelectedQueue().name">
+            <i class="-arrow material-icons -fade-in">navigate_next</i>
+            <router-link class="-item -fade-in" :to="'/index/connections/' + getSelectedConnection().name + '/queues/' + getSelectedQueue().name">
                {{ getSelectedQueue().name }}
             </router-link>
          </template>
@@ -93,8 +93,6 @@ export default {
    padding: 0.1rem 0;
    letter-spacing: 0.05em;
    color: var(--m-grey-900);
-
-   transition: box-shadow 0.15s ease;
 } .index-page > .-nav > .-item.-logo{
    font-size: 1.3em;
    font-family: 'Roboto Medium';
@@ -102,10 +100,41 @@ export default {
    text-transform: uppercase;
 } .index-page > .-nav > .-item:hover:not(:last-of-type){
    cursor: pointer;
-} .index-page > .-nav > .-item:hover,
-  .index-page > .-nav > .-item:last-of-type{
-   box-shadow: 0 3px 0 rgba(0, 0, 0, 1);
 }
+.index-page > .-nav > .-item::after{
+   content: '';
+   opacity: 0;
+   position: absolute;
+   left: 0;
+   bottom: -1px;
+   width: 100%;
+   height: 3px;
+   background-color: #000;
+   transform: translateY(-3px);
+   transition: opacity, transform, 0.12s ease;
+} .index-page > .-nav > .-item:hover::after,
+  .index-page > .-nav > .-item:last-of-type::after{
+   opacity: 1;
+   transform: translateY(0);
+}
+
+.index-page > .-nav > .-fade-in{
+   animation-name: index-page-nav-fade-in;
+   animation-duration: 0.15s;
+   animation-timing-function: ease-in-out;
+}
+
+@keyframes index-page-nav-fade-in {
+   0% {
+      opacity: 0;
+      transform: translateX(-50%);
+   }
+   100% {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+
 
 /**
  * Breadcrumb separators

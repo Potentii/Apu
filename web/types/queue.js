@@ -1,4 +1,4 @@
-import Entity from './entity.js'
+import Entity from './entity'
 
 export default class Queue extends Entity{
    constructor(name){

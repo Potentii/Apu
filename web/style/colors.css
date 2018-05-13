@@ -15,6 +15,7 @@
    --m-blue-700: #1976D2;
 
    --m-cyan-a200: #18FFFF;
+   --m-cyan-a700: #00B8D4;
 
    --m-light-green-a400: #76FF03;
 
@@ -49,9 +50,9 @@
    --primary-ic--base: var(--m-grey-700);
 
    /* Accent */
-   --accent-bg--base: var(--m-purple-700);
-   --accent-bg--1: var(--m-purple-700);
-   --accent-bg--2: var(--m-purple-700);
+   --accent-bg--base: var(--m-cyan-a700);
+   --accent-bg--1: var(--m-cyan-a700);
+   --accent-bg--2: var(--m-cyan-a700);
    --accent-fg--base: var(--m-grey-50);
    --accent-ic--base: var(--m-grey-700);
 
@@ -60,7 +61,7 @@
    --link-fg--visited: var(--m-blue-700);
 
    /* Text selection */
-   --selection-bg: var(--m-light-green-a400);
+   --selection-bg: var(--m-cyan-a200);
    --selection-fg: var(--m-grey-900);
 }
 

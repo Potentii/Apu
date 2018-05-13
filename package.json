@@ -2,9 +2,10 @@
   "name": "apu",
   "version": "1.0.0",
   "description": "A simple message queue client",
-  "main": "main.js",
   "scripts": {
-    "start": "parcel ./web"
+    "start": "parcel ./web",
+    "build": "parcel build ./web --out-dir ./build --target electron --log-level 1 --out-file index.html",
+    "electron": "electron ./node/main.js"
   },
   "repository": {
     "type": "git",

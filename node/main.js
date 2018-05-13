@@ -18,12 +18,12 @@ let win = null;
  */
 const settings = {
    display: {
-      width: 800,
-      height: 480,
+      width: 860,
+      height: 600,
       color: "#F5F5F5"
    },
-   // address: 'file://' + path.join(__dirname, './index.html')
-   address: 'http://localhost:1234')
+   // address: 'file://' + path.join(__dirname, '../build/index.html')
+   address: 'http://localhost:1234'
 };
 
 

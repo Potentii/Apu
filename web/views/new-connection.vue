@@ -30,7 +30,9 @@
       </form>
 
       <ul class="fab-list">
-         <button class="fab --raised" :form="$refs.form ? $refs.form.id : null"><i class="material-icons">done</i></button>
+         <button class="fab --raised" :form="$refs.form ? $refs.form.id : null">
+            <i class="material-icons">done</i>
+         </button>
       </ul>
    </div>
 </template>
@@ -105,12 +107,6 @@ export default {
 
 
 <style>
-
-.new-connection-view{
-   --fab-background-color: #d23;
-   --fab-foreground-color: #FAFAFA;
-}
-
 .new-connection-view > .-create-connection-form{
    display: flex;
    flex-direction: column;

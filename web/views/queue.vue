@@ -3,7 +3,7 @@
 
       <template v-if="getSelectedConnection() && getSelectedQueue()">
          <h1 class="-view-section-title">New message</h1>
-         <form class="-send-message-form">
+         <form class="-send-message-form" ref="form" v-id>
 
             <label class="-label">Correlation ID</label>
             <input class="-input -corr-id" type="text" v-model="form.correlation_id"/>
@@ -13,9 +13,12 @@
 
          </form>
 
+         <!-- * FABs list * -->
          <ul class="fab-list">
-            <router-link class="fab --raised" tag="button" :to="{ name: 'add-connection' }">O</router-link>
-            <button class="fab --raised" type="button">O</button>
+            <!-- * Send message FAB * -->
+            <button class="fab --raised" :form="$refs.form ? $refs.form.id : null" :disabled="!valid">
+               <i class="material-icons">send</i>
+            </button>
          </ul>
       </template>
 
@@ -51,7 +54,11 @@ export default {
          'getSavedConnections',
          'getSelectedConnection',
          'getSelectedQueue'
-      ])
+      ]),
+
+      valid(){
+         return !!this.form.message && !!this.form.message.trim();
+      }
    },
 
    beforeMount(){
@@ -96,12 +103,6 @@ export default {
 
 
 <style>
-
-.queue-view{
-   --fab-background-color: #d23;
-   --fab-foreground-color: #FAFAFA;
-}
-
 .queue-view > .-send-message-form{
    display: flex;
    flex-direction: column;
@@ -133,7 +134,7 @@ export default {
    white-space: nowrap;
    resize: vertical;
    min-height: 10em;
-   height: 25em;
+   height: 20em;
 }
 .queue-view > .-send-message-form > .-input.-corr-id,
 .queue-view > .-send-message-form > .-input.-message{

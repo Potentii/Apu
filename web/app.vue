@@ -1,20 +1,24 @@
 <template>
-   <div id="app" @message="onMessage($event)">
+   <div id="app">
       <router-view/>
+      <ui-messages-dispatcher/>
    </div>
 </template>
 
+
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+import UIMessagesDispatcher from './ui-messages/ui-messages-dispatcher'
+
 export default {
    name: 'app',
 
-   methods: {
-      onMessage(e){
-         console.log('message: ' + e);
-      }
+   components: {
+      'ui-messages-dispatcher': UIMessagesDispatcher
    }
 }
 </script>
+
 
 <style>
 #app{

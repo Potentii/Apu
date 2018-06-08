@@ -23,8 +23,10 @@
 
 
 <script>
+import { mapActions } from 'vuex'
 import Connection from '../types/connection'
 import Queue from '../types/queue'
+import * as ipc from '../tools/ipc'
 
 export default {
 
@@ -49,26 +51,59 @@ export default {
    },
 
    methods: {
+      ...mapActions({
+         'addUIMessage': 'ui-messages/addMessage'
+      }),
+
       loadQueues(){
-         this.queues = [
-            new Queue('queue-1'),
-            new Queue('queue-2'),
-            new Queue('queue-3'),
-            new Queue('queue-4'),
-            new Queue('queue-5')
-         ];
+         this.loading = true;
+
+         const connection = {
+            host:         this.conn.host,
+            port:         this.conn.port,
+            queueManager: this.conn.queue_manager,
+            channel:      this.conn.channel,
+            username:     this.conn.username,
+            password:     this.conn.password
+         };
+
+         ipc.send('queues:list', { connection }, 10000)
+            .then(res => {
+               this.loading = false;
+
+               const queues_names = res.data.filter(name => !/^AMQ\..+$/.test(name)).map(name => new Queue(name));
+               this.queues = queues_names;
+            })
+            .catch(err => {
+               this.loading = false;
+
+               if(err instanceof ipc.TimeoutError){
+                  this.addUIMessage({
+                     severity: 'ERROR',
+                     content: 'The MQ server took too long to respond'
+                  });
+               } else if(err.reasonCode){
+                  if(err.reasonCode == 2538){
+                     // Cannot connect to MQ
+                     this.addUIMessage({
+                        severity: 'ERROR',
+                        content: 'Could not connect to the MQ server'
+                     });
+                  }
+               } else{
+                  // TODO display message to user
+                  console.error(err);
+
+               }
+            });
       },
 
       load(){
-         this.loading = true;
-
          try{
             this.loadQueues();
          } catch(err){
             console.error(err);
          }
-
-         this.loading = false;
       }
    }
 

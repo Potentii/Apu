@@ -1,6 +1,8 @@
 # Parcel
 /dist
 /.cache
+/web/dist
+/web/.cache
 
 # Logs
 logs

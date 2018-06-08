@@ -3,29 +3,38 @@
       <h1 class="-view-section-title">New connection</h1>
       <form class="-create-connection-form" ref="form" v-id @submit.prevent="createForm_onSubmit">
 
-         <label class="-label">Name</label>
-         <input class="-input -corr-id" type="text" v-model="form.name" required/>
-
-         <label class="-label">Description</label>
-         <input class="-input -corr-id" type="text" v-model="form.description"/>
-
-         <label class="-label">Host</label>
-         <input class="-input -corr-id" type="text" v-model="form.host" required/>
-
-         <label class="-label">Port</label>
-         <input class="-input -corr-id" type="text" v-model="form.port" required/>
-
-         <label class="-label">Queue Manager</label>
-         <input class="-input -corr-id" type="text" v-model="form.queue_manager" required/>
-
-         <label class="-label">Channel</label>
-         <input class="-input -corr-id" type="text" v-model="form.channel"/>
-
-         <label class="-label">Username</label>
-         <input class="-input -corr-id" type="text" v-model="form.username"/>
-
-         <label class="-label">Password</label>
-         <input class="-input -corr-id" type="text" v-model="form.password"/>
+         <div class="field">
+            <label class="-label">Name</label>
+            <input class="-input -corr-id" type="text" v-model="form.name" required/>
+         </div>
+         <div class="field">
+            <label class="-label">Description</label>
+            <input class="-input -corr-id" type="text" v-model="form.description"/>
+         </div>
+         <div class="field">
+            <label class="-label">Host</label>
+            <input class="-input -corr-id" type="text" v-model="form.host" required/>
+         </div>
+         <div class="field">
+            <label class="-label">Port</label>
+            <input class="-input -corr-id" type="text" v-model="form.port" required/>
+         </div>
+         <div class="field">
+            <label class="-label">Queue Manager</label>
+            <input class="-input -corr-id" type="text" v-model="form.queue_manager" required/>
+         </div>
+         <div class="field">
+            <label class="-label">Channel</label>
+            <input class="-input -corr-id" type="text" v-model="form.channel"/>
+         </div>
+         <div class="field">
+            <label class="-label">Username</label>
+            <input class="-input -corr-id" type="text" v-model="form.username"/>
+         </div>
+         <div class="field">
+            <label class="-label">Password</label>
+            <input class="-input -corr-id" type="text" v-model="form.password"/>
+         </div>
 
       </form>
 
@@ -40,7 +49,7 @@
 
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Connection from '../types/connection'
 import * as connection_storage from '../storage/connections'
 
@@ -75,6 +84,10 @@ export default {
    },
 
    methods: {
+      ...mapActions([
+         'createNewConnection'
+      ]),
+
       clearForm(){
          this.form.name = '';
          this.form.description = '';
@@ -95,9 +108,13 @@ export default {
             this.form.host,
             this.form.port,
             this.form.queue_manager,
-            this.form.channel);
+            this.form.channel || null);
 
-         connection_storage.add(new_connection);
+         this.createNewConnection(new_connection);
+
+         this.$emit('message', 'Connection added');
+
+         this.$router.push({ name: 'connections' });
       }
    }
 
@@ -108,40 +125,45 @@ export default {
 
 <style>
 .new-connection-view > .-create-connection-form{
-   display: flex;
-   flex-direction: column;
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   grid-column-gap: 1em;
+   grid-row-gap: 2em;
+   grid-template-areas:
+      'name     description'
+      'host     port'
+      'manager  channel'
+      'username password';
    padding: 1rem var(--h-padding) 4rem var(--h-padding);
 }
-
-.new-connection-view > .-create-connection-form > .-label{
-   font-size: 0.9em;
-   color: var(--m-grey-700);
-   margin-bottom: 0.6em;
+@media (max-width: 500px) {
+   .new-connection-view > .-create-connection-form{
+      grid-template-columns: 1fr;
+      grid-template-areas: unset;
+   }
 }
-
-.new-connection-view > .-create-connection-form > .-input{
-   font-size: 0.8em;
-   padding: 0.6em 1em;
-   background-color: var(--m-grey-50);
-   border-radius: 2px;
-   margin-bottom: 2em;
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.06);
-
-   transition: box-shadow 0.2s ease;
-} .new-connection-view > .-create-connection-form > .-input:hover{
-   box-shadow: 0 4px 3px -1px rgba(0, 0, 0, 0.2);
-} .new-connection-view > .-create-connection-form > .-input:focus{
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.13);
+.new-connection-view > .-create-connection-form > .field.-name{
+   grid-area: name;
 }
-
-.new-connection-view > .-create-connection-form > .-input.-message{
-   white-space: nowrap;
-   resize: vertical;
-   min-height: 10em;
-   height: 25em;
+.new-connection-view > .-create-connection-form > .field.-description{
+   grid-area: description;
 }
-.new-connection-view > .-create-connection-form > .-input.-corr-id,
-.new-connection-view > .-create-connection-form > .-input.-message{
-   font-family: 'Roboto Mono';
+.new-connection-view > .-create-connection-form > .field.-host{
+   grid-area: host;
+}
+.new-connection-view > .-create-connection-form > .field.-port{
+   grid-area: port;
+}
+.new-connection-view > .-create-connection-form > .field.-queue-manager{
+   grid-area: manager;
+}
+.new-connection-view > .-create-connection-form > .field.-channel{
+   grid-area: channel;
+}
+.new-connection-view > .-create-connection-form > .field.-username{
+   grid-area: username;
+}
+.new-connection-view > .-create-connection-form > .field.-password{
+   grid-area: password;
 }
 </style>

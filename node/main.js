@@ -1,6 +1,7 @@
 const path = require('path');
 const electron = require('electron');
 const { app, BrowserWindow } = electron;
+const ipc_routes = require('./routes/builder');
 
 
 
@@ -30,6 +31,8 @@ const settings = {
 
 // *When electron is ready:
 app.on('ready', () => {
+   // *Setting up the ipc routes:
+   ipc_routes.build();
    // *Creating the window frame:
    createWindow(settings);
 });

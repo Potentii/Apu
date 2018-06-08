@@ -6,7 +6,7 @@
 
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import Connection from '../types/connection'
 
 export default {
@@ -30,15 +30,9 @@ export default {
          'markAsLoaded'
       ]),
 
-      loadSavedConnections(){
-         this.clearSavedConnections();
-         [
-            new Connection('conn1', '127.1.1.0', 1234, 'ABC', 'chann-123'),
-            new Connection('conn2', '127.1.1.0', 1234, 'ABC', ''),
-            new Connection('conn3', '127.1.1.0', 1234, 'ABC', ''),
-            new Connection('conn4', '127.1.1.0', 1234, 'ABC', 'chann-456')
-         ].forEach(c => this.addSavedConnection(c));
-      },
+      ...mapActions([
+         'loadConnectionsFromCache'
+      ]),
 
       loadPreferences(){
 
@@ -48,7 +42,7 @@ export default {
          this.message = 'Loading preferences';
          this.loadPreferences();
          this.message = 'Loading saved connections';
-         this.loadSavedConnections();
+         this.loadConnectionsFromCache();
 
          this.markAsLoaded();
 

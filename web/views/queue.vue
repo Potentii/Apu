@@ -3,13 +3,18 @@
 
       <template v-if="getSelectedConnection() && getSelectedQueue()">
          <h1 class="-view-section-title">New message</h1>
-         <form class="-send-message-form" ref="form" v-id>
 
-            <label class="-label">Correlation ID</label>
-            <input class="-input -corr-id" type="text" v-model="form.correlation_id"/>
+         <form class="-send-message-form" ref="form" v-id @submit.prevent="_onSubmit">
 
-            <label class="-label">Message</label>
-            <textarea class="-input -message" v-model="form.message"></textarea>
+            <div class="field">
+               <label class="-label">Correlation ID</label>
+               <input class="-input -corr-id" type="text" v-model="form.correlation_id"/>
+            </div>
+
+            <div class="field">
+               <label class="-label">Message</label>
+               <textarea class="-input -message" v-model="form.message"></textarea>
+            </div>
 
          </form>
 
@@ -34,6 +39,8 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import Queue from '../types/queue'
+import * as ipc from '../tools/ipc'
+
 
 export default {
 
@@ -85,15 +92,51 @@ export default {
             this.$emit('message', new Error(`Connection "${conn_name}" not found`));
             // *Sending the user back to the connections selection page:
             this.$router.push({ name: 'connections' });
+         } else{
+            // *Getting the queue name from the navigation parameter:
+            const queue_name = this.$route.params.queue_name;
+
+            if(queue_name)
+               this.setSelectedQueue(new Queue(queue_name));
+            else
+               this.setSelectedQueue(null); // TODO error
          }
 
-         // *Getting the queue name from the navigation parameter:
-         const queue_name = this.$route.params.queue_name;
+      },
 
-         if(queue_name)
-            this.setSelectedQueue(new Queue(queue_name));
-         else
-            this.setSelectedQueue(null);
+
+      _onSubmit(){
+         if(!this.getSelectedConnection() || !this.getSelectedQueue())
+            throw new Error('Invalid application state'); // TODO
+
+         const connection = this.getSelectedConnection();
+         const queue = this.getSelectedQueue();
+
+         const data = {
+            connection: {
+               host:         connection.host,
+               port:         connection.port,
+               queueManager: connection.queue_manager,
+               channel:      connection.channel,
+               username:     connection.username,
+               password:     connection.password
+            },
+            message: {
+               queueName:     queue.name,
+               correlationId: this.form.correlation_id,
+               body:          this.form.message
+            }
+         };
+
+         ipc.send('messages:send', data, 10000)
+            .then(res => {
+               console.log(res);
+               // TODO handle response
+            })
+            .catch(err => {
+               // if(err instanceof ipc.TimeoutError)
+               // TODO display message to user
+            });
       }
    }
 
@@ -104,40 +147,23 @@ export default {
 
 <style>
 .queue-view > .-send-message-form{
-   display: flex;
-   flex-direction: column;
+   display: grid;
+   grid-row-gap: 1.5em;
+   grid-template-areas:
+      'corr-id'
+      'message';
    padding: 1rem var(--h-padding) 4rem var(--h-padding);
 }
 
-.queue-view > .-send-message-form > .-label{
-   font-size: 0.9em;
-   color: var(--m-grey-700);
-   margin-bottom: 0.6em;
+.queue-view > .-send-message-form > .field > .-input.-corr-id,
+.queue-view > .-send-message-form > .field > .-input.-message{
+   font-family: 'Roboto Mono';
 }
-
-.queue-view > .-send-message-form > .-input{
-   font-size: 0.8em;
-   padding: 0.6em 1em;
-   background-color: var(--m-grey-50);
-   border-radius: 2px;
-   margin-bottom: 2em;
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.06);
-
-   transition: box-shadow 0.2s ease;
-} .queue-view > .-send-message-form > .-input:hover{
-   box-shadow: 0 4px 3px -1px rgba(0, 0, 0, 0.2);
-} .queue-view > .-send-message-form > .-input:focus{
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.13);
-}
-
-.queue-view > .-send-message-form > .-input.-message{
+.queue-view > .-send-message-form > .field > .-input.-message{
    white-space: nowrap;
    resize: vertical;
    min-height: 10em;
    height: 20em;
-}
-.queue-view > .-send-message-form > .-input.-corr-id,
-.queue-view > .-send-message-form > .-input.-message{
-   font-family: 'Roboto Mono';
+   font-size: 0.9em;
 }
 </style>

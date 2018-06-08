@@ -7,11 +7,17 @@ import mutations from './mutations'
 import getters   from './getters'
 import actions   from './actions'
 
+import ui_messages from '../ui-messages/store'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
    state,
    mutations,
    getters,
-   actions
+   actions,
+
+   modules: {
+      'ui-messages': ui_messages
+   }
 });

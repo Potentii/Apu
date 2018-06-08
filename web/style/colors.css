@@ -6,6 +6,8 @@
    /**
     * Material colors
     */
+   --m-red-800: #C62828;
+
    --m-pink-a200: #FF4081;
    --m-pink-a400: #F50057;
 
@@ -16,6 +18,8 @@
 
    --m-cyan-a200: #18FFFF;
    --m-cyan-a700: #00B8D4;
+
+   --m-yellow-700: #FBC02D;
 
    --m-light-green-a400: #76FF03;
 

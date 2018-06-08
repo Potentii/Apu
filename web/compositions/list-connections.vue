@@ -41,7 +41,7 @@ export default {
 <style>
 .list-connections > .-list > .-item{
    margin: 0 var(--h-padding) 1em var(--h-padding);
-   padding: 0.6em 1em;
+   padding: 0.9em 1.4em;
    overflow: hidden;
    border-radius: 3px;
    background-color: var(--m-grey-50);
@@ -73,6 +73,7 @@ export default {
    display: grid;
    grid-template-columns: 1fr;
    grid-template-rows: auto;
+   grid-row-gap: 0.3em;
    grid-template-areas:
       'location'
       'name';

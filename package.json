@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "A simple message queue client",
   "scripts": {
-    "build": "parcel build ./web --out-dir ./build --target electron --log-level 1 --out-file index.html",
-    "electron": "electron ./node/main.js"
+    "serve": "parcel index.html --out-dir ./serve --target browser --no-autoinstall",
+    "build": "parcel build index.html --out-dir ./build --target electron --log-level 1 --out-file index.html --no-cache",
+    "electron": "electron ./infra/electron.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,19 @@
   },
   "homepage": "https://github.com/Potentii/Apu#readme",
   "dependencies": {
-    "electron": "1.8.6",
-    "ipc-bridge-nodejs": "1.0.0"
+    "electron": "2.0.3",
+    "electron-localshortcut": "3.1.0",
+    "ipc-bridge-nodejs": "1.0.0",
+    "vue": "2.5.16",
+    "vue-router": "3.0.1",
+    "vuex": "3.0.1"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "1.2.1",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "parcel-bundler": "1.9.3",
+    "vue-hot-reload-api": "2.3.0",
+    "vue-template-compiler": "2.5.16"
   }
 }

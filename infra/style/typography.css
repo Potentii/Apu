@@ -1,0 +1,12 @@
+/**
+ * Setting the default app typography
+ */
+:root{
+   font-family: 'Roboto', sans-serif;
+   font-size: 16px;
+   /* -webkit-font-smoothing: antialiased; */
+}
+
+:root .material-icons{
+   font-display: swap;
+}

@@ -1,0 +1,54 @@
+/* All */
+*{
+   position: relative;
+   margin: 0;
+   padding: 0;
+   background: none;
+   border: none;
+   width: auto;
+   height: auto;
+   box-sizing: border-box;
+} *:focus{
+   outline: none;
+}
+
+
+/* Links */
+a{
+   text-decoration: none;
+} a:link{
+   color: var(--link-fg);
+} a:visited{
+   color: var(--link-fg--visited);
+} a:hover{
+   cursor: pointer;
+}
+
+
+/* Lists */
+ul{
+   list-style: none;
+}
+
+
+/* Buttons */
+button:hover{
+   cursor: pointer;
+}
+
+
+/* Selection */
+::selection{
+   background-color: var(--selection-bg);
+   color: var(--selection-fg);
+   text-shadow: inherit;
+}
+
+html, body{
+   width: 100%;
+   height: 100%;
+}
+
+.fx--blurred-title{
+   text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}

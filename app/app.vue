@@ -26,7 +26,7 @@ export default {
    height: 100%;
 
    background-color: var(--blank-bg--base);
-   background-image: url('/infra/style/resources/images/noise.png');
+   background-image: url('../infra/style/resources/images/noise.png');
    background-blend-mode: hard-light;
 
    --fab-background-color: var(--accent-bg--base);

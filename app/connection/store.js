@@ -1,5 +1,6 @@
 import Connection from './connection.esm'
 import SavedConnection from './saved-connection'
+import * as cache from './cache'
 
 export default {
    namespaced: true,
@@ -55,17 +56,13 @@ export default {
 
    actions: {
       refreshSavedConnectionsFromCache({ commit }){
-         // TODO move it to the cache module:
-         commit('setSavedConnections', [
-            new SavedConnection('Conexão 1', new Connection('192.168.1.2', '1415', 'QUEUE_MNGR', 'MQCHANN', null, null)),
-            new SavedConnection('Conexão 2', new Connection('192.168.1.3', '1415', 'QUEUE_MNGR', null, 'username1', '1234')),
-            new SavedConnection('Conexão 3', new Connection('192.168.1.4', '1415', 'QUEUE_MNGR', null, null, null)),
-            new SavedConnection('Conexão 4', new Connection('192.168.1.5', '1415', 'QUEUE_MNGR', 'MQCHANN', 'username2', '1234'))
-         ]);
+         const connections = cache.getAllConnections();
+         commit('setSavedConnections', connections);
       },
 
 
       createNewSavedConnection({ commit }, new_saved_connection){
+         cache.addConnection(new_saved_connection);
          commit('addSavedConnection', new_saved_connection);
       }
    }

@@ -13,7 +13,7 @@ export default class Connection{
       return new Connection(
          obj.host,
          obj.port,
-         obj.queueManager,
+         obj.queue_manager,
          obj.channel,
          obj.username,
          obj.password);

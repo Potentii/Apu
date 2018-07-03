@@ -1,11 +1,25 @@
 <template>
    <ul class="ui-messages-dispatcher">
       <li class="-message" :data-severity="message.severity" v-for="message in messages">
+
          <span class="-content">{{ message.content }}</span>
-         <button class="-close-btn material-icons"
+
+         <span class="-description">{{ message.description }}</span>
+
+         <button
+            class="-dismiss-btn material-icons"
+            v-if="message.hasAction(message.constructor.ACTION.DISMISS)"
             type="button"
-            @click="_closeBtn_onClick($event, message)">
+            @click="_dismissBtn_onClick($event, message)">
             close
+         </button>
+
+         <button
+            class="-undo-btn material-icons"
+            v-if="message.hasAction(message.constructor.ACTION.UNDO)"
+            type="button"
+            @click="_undoBtn_onClick($event, message)">
+            undo
          </button>
       </li>
    </ul>
@@ -13,26 +27,27 @@
 
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
+import UIMessage from './ui-message'
 
 export default {
+
    name: 'ui-messages-dispatcher',
 
    computed: {
-      ...mapState('ui-messages', [
-         'messages'
-      ])
+      ...mapState('ui-messages', [ 'messages' ])
    },
 
    methods: {
-      ...mapMutations('ui-messages', [
-         '_removeMessage'
-      ]),
+      _dismissBtn_onClick(e, message){
+         message.emit(UIMessage.ACTION.DISMISS);
+      },
 
-      _closeBtn_onClick(e, message){
-         this._removeMessage(message);
+      _undoBtn_onClick(e, message){
+         message.emit(UIMessage.ACTION.UNDO);
       }
    }
+
 }
 </script>
 
@@ -53,27 +68,54 @@ export default {
    display: grid;
    align-items: center;
 
-   grid-template-columns: auto 1fr auto;
+   grid-template-columns: auto 1fr auto auto;
+   grid-template-rows: auto auto;
    grid-template-areas:
-      'content ... close';
+      'content     ... undo dismiss'
+      'description ... undo dismiss';
 
-   padding: 1em 1em;
+   padding: 1em 1.5em;
    margin-top: 0.8em;
-   border-radius: 3px;
+
+   border-radius: 7px;
    color: var(--m-grey-50);
    background-color: var(--m-grey-800);
 
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.3);
+
+   overflow: hidden;
 
    animation-name: ui-message-fade;
    animation-duration: 0.1s;
    animation-timing-function: ease;
-} .ui-messages-dispatcher > .-message[data-severity="ERROR"]{
-   color: var(--m-grey-50);
-   background-color: var(--m-red-800);
-} .ui-messages-dispatcher > .-message[data-severity="WARNING"]{
-   color: var(--m-grey-900);
+}
+.ui-messages-dispatcher > .-message::before{
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 8px;
+   height: 100%;
+} .ui-messages-dispatcher > .-message[data-severity="SUCCESS"]::before{
+   background-color: var(--m-light-green-a400);
+} .ui-messages-dispatcher > .-message[data-severity="INFO"]::before{
+   background-color: var(--m-blue-600);
+} .ui-messages-dispatcher > .-message[data-severity="WARNING"]::before{
    background-color: var(--m-yellow-700);
+} .ui-messages-dispatcher > .-message[data-severity="ERROR"]::before{
+   background-color: var(--m-red-800);
+}
+.ui-messages-dispatcher > .-message > .-content{
+   grid-area: content;
+}
+.ui-messages-dispatcher > .-message > .-description{
+   grid-area: description;
+}
+.ui-messages-dispatcher > .-message > .-dismiss-btn{
+   grid-area: dismiss;
+}
+.ui-messages-dispatcher > .-message > .-undo-btn{
+   grid-area: undo;
 }
 
 @media (max-width: 600px){
@@ -92,14 +134,22 @@ export default {
 }
 
 .ui-messages-dispatcher > .-message > .-content{
-   grid-area: content;
    cursor: default;
-   font-size: 0.9em;
+   font-size: 1em;
+   letter-spacing: 0.02em;
 }
-.ui-messages-dispatcher > .-message > .-close-btn{
-   grid-area: close;
+.ui-messages-dispatcher > .-message > .-description{
+   cursor: default;
+   opacity: 0.7;
+   margin-top: 0.5em;
+   font-size: 0.8em;
+   letter-spacing: 0.02em;
+}
+.ui-messages-dispatcher > .-message > .-dismiss-btn,
+.ui-messages-dispatcher > .-message > .-undo-btn{
    opacity: 0.6;
    color: var(--m-grey-50);
+   user-select: none;
 }
 
 @keyframes ui-message-fade {

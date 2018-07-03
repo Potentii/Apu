@@ -11,6 +11,6 @@ export default class SavedConnection extends Entity{
    }
 
    static from(obj){
-      return new SavedConnection(obj.name, obj.data);
+      return new SavedConnection(obj.name, Connection.from(obj.data));
    }
 }

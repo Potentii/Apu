@@ -130,7 +130,7 @@ export default {
    grid-template-areas:
       'corr-id'
       'message';
-   padding: 1rem var(--h-padding) 4rem var(--h-padding);
+   padding: 1rem var(--h-padding) 6rem var(--h-padding);
 }
 
 .v-message-sender-view > .-send-message-form > .field > .-input.-corr-id,

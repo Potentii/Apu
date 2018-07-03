@@ -52,3 +52,8 @@ html, body{
 .fx--blurred-title{
    text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
+
+.text--ui-label{
+   cursor: default;
+   user-select: none;
+}

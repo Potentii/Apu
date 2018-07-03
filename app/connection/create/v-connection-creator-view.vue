@@ -4,23 +4,23 @@
       <form class="-create-connection-form" ref="form" v-id @submit.prevent="_onSubmit">
 
          <div class="field">
-            <label class="-label">Name</label>
-            <input class="-input -corr-id" type="text" v-model="form.name" required/>
+            <label class="-label --required">Name</label>
+            <input class="-input -corr-id" type="text" v-model="form.name" placeholder="Dev, production environment, etc" title="A name that identifies this connection" required autofocus/>
          </div>
          <div class="field">
             <label class="-label">Description</label>
             <input class="-input -corr-id" type="text" v-model="form.description"/>
          </div>
          <div class="field">
-            <label class="-label">Host</label>
-            <input class="-input -corr-id" type="text" v-model="form.host" required/>
+            <label class="-label --required">Host</label>
+            <input class="-input -corr-id" type="text" v-model="form.host" placeholder="The IP address of the MQ server" required/>
          </div>
          <div class="field">
-            <label class="-label">Port</label>
-            <input class="-input -corr-id" type="text" v-model="form.port" required/>
+            <label class="-label --required">Port</label>
+            <input class="-input -corr-id" type="text" v-model="form.port" placeholder="The IP address port" required/>
          </div>
          <div class="field">
-            <label class="-label">Queue Manager</label>
+            <label class="-label --required">Queue manager</label>
             <input class="-input -corr-id" type="text" v-model="form.queue_manager" required/>
          </div>
          <div class="field">
@@ -87,6 +87,7 @@ export default {
 
    methods: {
       ...mapActions('connection', [ 'createNewSavedConnection' ]),
+      ...mapActions('ui-messages', [ 'addMessage' ]),
 
 
       clearForm(){
@@ -129,6 +130,8 @@ export default {
 
          // *Cleaning the data typed in the form:
          this.clearForm();
+
+         this.$router.push({ name: 'connections' });
       }
 
    }
@@ -149,7 +152,7 @@ export default {
       'host     port'
       'manager  channel'
       'username password';
-   padding: 1rem var(--h-padding) 4rem var(--h-padding);
+   padding: 1rem var(--h-padding) 6rem var(--h-padding);
 }
 @media (max-width: 500px) {
    .v-connection-creator-view > .-create-connection-form{

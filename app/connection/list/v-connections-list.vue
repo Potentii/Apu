@@ -45,22 +45,21 @@ export default {
    margin: 0 var(--h-padding) 1em var(--h-padding);
    padding: 0.9em 1.4em;
    overflow: hidden;
-   border-radius: 3px;
+   border-radius: 8px;
    background-color: var(--m-grey-50);
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.15);
+   box-shadow: 0 3px 10px -1px rgba(0, 0, 0, 0.08);
 
    transition: background-color, box-shadow, 0.2s ease;
-}
-.v-connections-list > .-item:hover{
+} .v-connections-list > .-item:hover{
    cursor: pointer;
    background-color: var(--m-grey-100);
-   box-shadow: 0 7px 4px -4px rgba(0, 0, 0, 0.15);
+   box-shadow: 0 3px 3px -1px rgba(0, 0, 0, 0.1);
 }
 .v-connections-list > .-item::before{
    content: '';
    position: absolute;
    opacity: 0.5;
-   width: 4px;
+   width: 6px;
    height: 100%;
    top: 0;
    left: 0;
@@ -80,6 +79,7 @@ export default {
       'location'
       'name';
 }
+
 .v-connections-list > .-item > .-container > .-location{
    grid-area: location;
 }

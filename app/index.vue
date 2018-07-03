@@ -2,7 +2,7 @@
    <div class="index-page">
 
       <!-- * Navigation breadcrumb * -->
-      <nav class="-nav">
+      <nav class="-nav text--ui-label">
 
          <!-- * Home link * -->
          <router-link class="-item -logo" to="/index/connections">
@@ -154,9 +154,11 @@ export default {
 }
 
 .index-page > .-router > .-view-section-title{
+   cursor: default;
    font-family: 'Roboto Medium';
    letter-spacing: 0.03em;
    font-size: 1.5em;
    padding: 0.1em var(--h-padding);
+   user-select: none;
 }
 </style>

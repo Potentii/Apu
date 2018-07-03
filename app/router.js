@@ -44,9 +44,9 @@ const router = new VueRouter({
    ]
 });
 
-
+// *Handling first navigation:
 router.beforeEach((to, from, next) => {
-   // *Checking if the user came to the application manually (and not to the loading page):
+   // *Checking if the user came to the application manually (and not from the loading page):
    if(from.name === null && to.name === null)
       // *If they did, and navigated to the root/unknown page:
       // *Redirecting to the loading page:

@@ -8,6 +8,7 @@
 }
 
 .fab{
+   cursor: pointer;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -24,11 +25,12 @@
    animation-timing-function: ease-out;
 
    will-change: opacity, transform;
+
+   user-select: none;
 }
 .fab:disabled{
-   opacity: 0.5;
-} .fab:disabled:hover{
    cursor: default;
+   opacity: 0.5;
 }
 
 @keyframes fab-fade-in {

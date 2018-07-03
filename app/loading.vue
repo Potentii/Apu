@@ -23,15 +23,7 @@ export default {
    },
 
    methods: {
-      ...mapMutations([
-         'clearSavedConnections',
-         'addSavedConnection',
-         'markAsLoaded'
-      ]),
-
-      ...mapActions('connection', [
-         'refreshSavedConnectionsFromCache'
-      ]),
+      ...mapActions('connection', [ 'refreshSavedConnectionsFromCache' ]),
 
       loadPreferences(){
 
@@ -43,7 +35,6 @@ export default {
          this.message = 'Loading saved connections';
          this.refreshSavedConnectionsFromCache();
 
-         this.markAsLoaded();
 
          const redirect_to = this.$route.params.redirect_to;
          if(redirect_to)

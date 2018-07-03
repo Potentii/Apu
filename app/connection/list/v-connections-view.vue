@@ -1,7 +1,7 @@
 <template>
    <div class="v-connections-view">
 
-      <template v-if="!saved_connections">
+      <template v-if="saved_connections && saved_connections.length">
          <!-- * View main title * -->
          <h1 class="-view-section-title fx--blurred-title">Connections</h1>
 
@@ -21,14 +21,13 @@
       <template v-else>
          <div class="-no-connections-state">
             <!-- * No connections image * -->
-            <img class="-no-connections-image" title="No saved connections were found">
+            <!-- <img class="-no-connections-image" title="No saved connections were found"> -->
 
             <!-- * No connections text * -->
-            <h1 class="-no-connections-text fx--blurred-title">No connections in sight</h1>
+            <h1 class="-no-connections-text fx--blurred-title text--ui-label">No connections in sight</h1>
 
-            <router-link class="-add-first-connection" tag="button" :to="{ name: 'new-connection' }">
-               <i class="material-icons">add_circle</i>
-               &nbsp;&nbsp;
+            <router-link class="-add-first-connection text--ui-label" tag="button" :to="{ name: 'new-connection' }">
+               <i class="-icon material-icons">add_circle</i>
                <span class="-text">Create the first one</span>
             </router-link>
          </div>
@@ -61,13 +60,13 @@ export default {
 
 
 <style>
+.v-connections-view{
+   height: 100%;
+}
+
 .v-connections-view > .v-connections-list{
    padding-top: 1rem;
    padding-bottom: 4rem;
-}
-
-.v-connections-view{
-   height: 100%;
 }
 
 .v-connections-view > .-no-connections-state{
@@ -77,7 +76,7 @@ export default {
 
    height: 100%;
 
-   padding: 1em 6em;
+   padding: 4em 6em 1em 6em;
 
    overflow: auto;
 }
@@ -87,8 +86,8 @@ export default {
 }
 
 .v-connections-view > .-no-connections-state > .-no-connections-image{
-   width: 7em;
-   height: 4em;
+   width: 12em;
+   height: 6em;
 
    margin-bottom: 1em;
 
@@ -105,7 +104,7 @@ export default {
 }
 
 .v-connections-view > .-no-connections-state > .-add-first-connection{
-   --btn-height: 3.2em;
+   --btn-height: 2.9em;
 
    display: flex;
    align-items: center;
@@ -120,10 +119,33 @@ export default {
 
    border-radius: calc(var(--btn-height) / 2);
 
-   box-shadow: 0 0 3px 1px rgba(0, 230, 118, 0.5);
+   animation: add-first-connection-pulse 2s ease infinite;
+   transition: box-shadow, transform, 0.2s ease;
+} .v-connections-view > .-no-connections-state > .-add-first-connection:hover{
+   animation: none;
+   transform: scale(1.03);
+   box-shadow: 0 3px 10px 2px rgba(0, 230, 118, 0.2);
 }
 
-.v-connections-view > .-no-connections-state > .-add-first-connection > .material-icons{
-   font-size: 1.65em;
+@keyframes add-first-connection-pulse {
+   0%{
+      box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.8);
+   }
+   70%{
+      box-shadow: 0 0 4px 10px rgba(0, 230, 118, 0);
+   }
+   100%{
+      box-shadow: 0 0 0 0 rgba(0, 230, 118, 0);
+   }
 }
+
+.v-connections-view > .-no-connections-state > .-add-first-connection > .-icon{
+   margin-right: 0.3em;
+   font-size: 1.65em;
+   text-shadow: 0 2px 7px rgba(0, 0, 0, 0.12);
+}
+.v-connections-view > .-no-connections-state > .-add-first-connection > .-text{
+   font-weight: 600;
+}
+
 </style>

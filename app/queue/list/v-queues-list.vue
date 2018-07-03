@@ -92,7 +92,7 @@ export default {
    overflow: hidden;
    background-color: var(--m-grey-50);
    margin: 0 var(--h-padding) 1em var(--h-padding);
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 3px 8px -1px rgba(0, 0, 0, 0.1);
 }
 
 .v-queues-list > .-list > .-item{

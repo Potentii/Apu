@@ -5,9 +5,15 @@
 }
 
 .field > .-label{
+   cursor: default;
    font-size: 0.8em;
    color: var(--m-grey-700);
    margin-bottom: 0.4em;
+   user-select: none;
+}
+.field > .-label.--required::after{
+   content: ' *';
+   color: #D50000;
 }
 
 .field > .-input{

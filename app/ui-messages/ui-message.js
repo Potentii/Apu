@@ -1,19 +1,36 @@
-export default class UIMessage {
+const EventEmitter = nodeRequire('events');
+
+const SEVERITY = Object.freeze({
+   ERROR: 'ERROR',
+   WARNING: 'WARNING',
+   INFO: 'INFO',
+   SUCCESS: 'SUCCESS'
+});
+
+const ACTION = Object.freeze({
+   DISMISS: 'DISMISS',
+   UNDO: 'UNDO'
+});
+
+export default class UIMessage extends EventEmitter {
    constructor(severity, content, description, life){
+      super();
       this.severity = severity;
       this.content = content;
       this.description = description || null;
       this.life = life;
       this.date = Date.now();
-
-      this._SEVERITY = Object.freeze({
-         ERROR: 'ERROR',
-         WARNING: 'WARNING',
-         INFO: 'INFO'
-      });
    }
 
    static get SEVERITY(){
-      return this._SEVERITY;
+      return SEVERITY;
+   }
+
+   static get ACTION(){
+      return ACTION;
+   }
+
+   hasAction(action_name){
+      return !!this.listenerCount(action_name);
    }
 }

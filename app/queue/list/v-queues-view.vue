@@ -1,29 +1,31 @@
 <template>
    <div class="v-queues-view">
-      <template v-if="true">
-         <!-- <router-link
-            class="-item"
-            tag="button"
-            :to="'/index/connections/' + getSelectedConnection().name + '/edit'">
-            Edit
-         </router-link> -->
 
-         <h1 class="-view-section-title">Queues</h1>
+      <h1 class="-view-section-title">Queues</h1>
 
-         <v-queues-list :connection="selected_saved_connection"/>
+      <template v-if="!loading && queues && queues.length">
+         <v-queues-list :queues="queues" :connectionname="selected_saved_connection.name"/>
       </template>
-      <template v-else>
-         Loading connection info...
+
+      <template v-if="loading">
+         Loading queues...
       </template>
+
+      <template v-if="!loading && (!queues || !queues.length)">
+         No queues found
+      </template>
+
    </div>
 </template>
 
 
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import QueuesList from './v-queues-list'
 import ConnectionResolverMixin from '/app/connection/v-connection-resolver-mixin'
+import * as ipc from './ipc'
+import TimeoutError from '/infra/timeout-error'
 
 export default {
 
@@ -37,8 +39,57 @@ export default {
       'v-queues-list': QueuesList
    },
 
+   data(){
+      return {
+         loading: false,
+         queues: []
+      };
+   },
+
    computed: {
       ...mapState('connection', [ 'selected_saved_connection' ])
+   },
+
+   beforeMount(){
+      this.refreshQueues();
+   },
+
+   methods: {
+      ...mapActions('ui-messages', [ 'addMessage' ]),
+
+      refreshQueues(){
+         this.loading = true;
+
+         if(!this.selected_saved_connection){
+            this.queues = [];
+            this.loading = false;
+            return;
+         }
+
+         ipc.loadQueuesFromConnection(this.selected_saved_connection.data)
+            .then(queues => this.queues = queues)
+            .catch(err => {
+               if(err instanceof TimeoutError){
+                  this.addMessage({
+                     severity: 'ERROR',
+                     content: `The MQ server took too long to respond`
+                  });
+               } else if(err.reasonCode == 2538){
+                  // Cannot connect to MQ
+                  this.addMessage({
+                     severity: 'ERROR',
+                     content: `Could not connect to the MQ server (ERROR 2538)`
+                  });
+               } else{
+                  this.addMessage({
+                     severity: 'ERROR',
+                     content: `Unexpected error (${err.message})`
+                  });
+                  console.error(err);
+               }
+            })
+            .then(() => this.loading = false);
+      }
    }
 
 }
@@ -47,8 +98,11 @@ export default {
 
 
 <style>
+.v-queues-view{
+   height: 100%;
+}
 .v-queues-view > .v-queues-list{
-   padding-top: 1rem;
-   padding-bottom: 4rem;
+   margin-top: 1rem;
+   margin-bottom: 4rem;
 }
 </style>

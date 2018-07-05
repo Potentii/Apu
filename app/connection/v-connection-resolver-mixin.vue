@@ -21,7 +21,7 @@ export default {
 
       if(!saved_connection){
          this.clearSelectedSavedConnection();
-         this.addMessage(new UIMessage('ERROR', `Error while loading the connection`));
+         this.addMessage(new UIMessage(UIMessage.SEVERITY.ERROR, `Error while loading the connection`));
          this.$router.go(-1);
       } else{
          this.setSelectedSavedConnection(saved_connection);
@@ -29,9 +29,11 @@ export default {
    },
 
    beforeRouteLeave(to, from, next){
-      if(this.selected_saved_connection)
+      // *Clearing the selected connection only if the next page won't need it:
+      if(!to.params.hasOwnProperty('conn_name') && this.selected_saved_connection)
          this.clearSelectedSavedConnection();
 
+      // *Taking the user to the next page:
       next();
    },
 

@@ -1,0 +1,90 @@
+.fab-list{
+   display: flex;
+   flex-direction: column-reverse;
+   align-items: center;
+   position: fixed;
+   bottom: 1.5rem;
+   right: 2rem;
+}
+
+.fab{
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   width: 4em;
+   height: 4em;
+
+   background-color: var(--fab-background-color);
+   color: var(--fab-foreground-color);
+   border-radius: 50%;
+
+   animation-name: fab-fade-in;
+   animation-duration: 0.15s;
+   animation-timing-function: ease-out;
+
+   will-change: opacity, transform;
+
+   user-select: none;
+}
+.fab:disabled{
+   cursor: default;
+   opacity: 0.5;
+}
+
+@keyframes fab-fade-in {
+   0%{
+      opacity: 0;
+      transform: scale(0.75);
+   }
+}
+
+.fab-list > .fab{
+   margin-top: 1rem;
+}
+.fab-list > .fab:not(:first-child){
+   width: 3em;
+   height: 3em;
+
+   animation-name: fab-list-secondary-fade-in;
+   animation-duration: 0.15s;
+   animation-timing-function: ease-in-out;
+   animation-delay: 0.2s;
+   animation-fill-mode: both;
+}
+
+@keyframes fab-list-secondary-fade-in {
+   0%{
+      opacity: 0;
+      transform: scale(0.75) translateY(50%);
+   }
+}
+
+.fab:enabled{
+   transition: box-shadow, transform, 0.15s ease;
+} .fab.--raised:enabled:hover{
+   transform: scale(1.06);
+   transition: box-shadow, transform, 0.15s ease;
+} .fab.--raised:enabled:active{
+   transform: scale(0.96);
+   transition: box-shadow, transform, 0.1s ease;
+}
+
+.fab:enabled.--raised{
+   box-shadow: 0 4px 2px -1px rgba(0, 0, 0, 0.15);
+} .fab.--raised:enabled:hover{
+   box-shadow: 0 5px 3px -1px rgba(0, 0, 0, 0.25);
+} .fab.--raised:enabled:active{
+   box-shadow: 0 6px 4px -3px rgba(0, 0, 0, 0.2);
+}
+
+.fab:disabled.--raised{
+   box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.fab > .material-icons{
+   font-size: 1.4rem;
+} .fab:not(:first-child) > .material-icons{
+   font-size: 1.2rem;
+}

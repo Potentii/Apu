@@ -1,4 +1,6 @@
 # Parcel
+/serve
+/build
 /dist
 /.cache
 /web/dist

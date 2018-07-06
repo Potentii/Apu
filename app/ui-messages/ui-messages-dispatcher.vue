@@ -2,9 +2,10 @@
    <ul class="ui-messages-dispatcher">
       <li class="-message" :data-severity="message.severity" v-for="message in messages">
 
-         <span class="-content">{{ message.content }}</span>
-
-         <span class="-description">{{ message.description }}</span>
+         <div class="-content">
+            <span class="-title">{{ message.title }}</span>
+            <span class="-description" v-if="message.description">{{ message.description }}</span>
+         </div>
 
          <button
             class="-dismiss-btn material-icons"
@@ -67,12 +68,9 @@ export default {
 .ui-messages-dispatcher > .-message{
    display: grid;
    align-items: center;
-
    grid-template-columns: auto 1fr auto auto;
-   grid-template-rows: auto auto;
    grid-template-areas:
-      'content     ... undo dismiss'
-      'description ... undo dismiss';
+      'content     ... undo dismiss';
 
    padding: 1em 1.5em;
    margin-top: 0.8em;
@@ -97,7 +95,7 @@ export default {
    width: 8px;
    height: 100%;
 } .ui-messages-dispatcher > .-message[data-severity="SUCCESS"]::before{
-   background-color: var(--m-light-green-a400);
+   background-color: var(--m-green-a400);
 } .ui-messages-dispatcher > .-message[data-severity="INFO"]::before{
    background-color: var(--m-blue-600);
 } .ui-messages-dispatcher > .-message[data-severity="WARNING"]::before{
@@ -107,9 +105,6 @@ export default {
 }
 .ui-messages-dispatcher > .-message > .-content{
    grid-area: content;
-}
-.ui-messages-dispatcher > .-message > .-description{
-   grid-area: description;
 }
 .ui-messages-dispatcher > .-message > .-dismiss-btn{
    grid-area: dismiss;
@@ -134,15 +129,19 @@ export default {
 }
 
 .ui-messages-dispatcher > .-message > .-content{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}
+.ui-messages-dispatcher > .-message > .-content > .-title{
    cursor: default;
    font-size: 1em;
    letter-spacing: 0.02em;
 }
-.ui-messages-dispatcher > .-message > .-description{
+.ui-messages-dispatcher > .-message > .-content > .-description{
    cursor: default;
    opacity: 0.7;
-   margin-top: 0.5em;
-   font-size: 0.8em;
+   font-size: 0.85em;
    letter-spacing: 0.02em;
 }
 .ui-messages-dispatcher > .-message > .-dismiss-btn,

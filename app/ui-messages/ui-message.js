@@ -13,10 +13,10 @@ const ACTION = Object.freeze({
 });
 
 export default class UIMessage extends EventEmitter {
-   constructor(severity, content, description, life){
+   constructor(severity, title, description, life){
       super();
       this.severity = severity;
-      this.content = content;
+      this.title = title;
       this.description = description || null;
       this.life = life;
       this.date = Date.now();

@@ -11,7 +11,7 @@
    margin-bottom: 0.4em;
    user-select: none;
 }
-.field > .-label.--required::after{
+.field.--required > .-label::after{
    content: ' *';
    color: #D50000;
 }
@@ -19,14 +19,15 @@
 .field > .-input{
    font-size: 0.8em;
    padding: 0.6em 1em;
+   width: 100%;
    font-size: 1rem;
    background-color: var(--m-grey-50);
-   border-radius: 2px;
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.06);
+   border-radius: 4px;
+   box-shadow: 0 3px 10px -1px rgba(0, 0, 0, 0.06);
 
    transition: box-shadow 0.2s ease;
 } .field > .-input:hover{
-   box-shadow: 0 4px 3px -1px rgba(0, 0, 0, 0.2);
+   box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1);
 } .field > .-input:focus{
-   box-shadow: 0 3px 2px -1px rgba(0, 0, 0, 0.13);
+   box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2);
 }

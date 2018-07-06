@@ -23,6 +23,8 @@
 
    --m-light-green-a400: #76FF03;
 
+   --m-green-a400: #00E676;
+
    --m-grey-50: #FAFAFA;
    --m-grey-100: #F5F5F5;
    --m-grey-200: #EEEEEE;
@@ -54,9 +56,9 @@
    --primary-ic--base: var(--m-grey-700);
 
    /* Accent */
-   --accent-bg--base: var(--m-cyan-a700);
-   --accent-bg--1: var(--m-cyan-a700);
-   --accent-bg--2: var(--m-cyan-a700);
+   --accent-bg--base: var(--m-green-a400);
+   --accent-bg--1: var(--m-green-a400);
+   --accent-bg--2: var(--m-green-a400);
    --accent-fg--base: var(--m-grey-50);
    --accent-ic--base: var(--m-grey-700);
 

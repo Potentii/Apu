@@ -115,7 +115,7 @@ export default {
    font-size: 1.05em;
 
    color: var(--m-grey-50);
-   background-color: #00E676;
+   background-color: var(--accent-bg--base);
 
    border-radius: calc(var(--btn-height) / 2);
 

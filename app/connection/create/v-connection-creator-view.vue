@@ -54,14 +54,14 @@
             :form="$refs.form ? $refs.form.id : null">
             <i class="material-icons">done</i>
          </button>
-         <button class="fab --raised"
+         <!-- <button class="fab --raised"
             @click="action='TEST-CONNECTION'"
             :disabled="testing"
             title="Test connection"
             :form="$refs.form ? $refs.form.id : null">
             <i class="material-icons" v-if="!testing">swap_horiz</i>
             <md-progress-spinner v-else md-mode="indeterminate" md-diameter="22" md-stroke="3"/>
-         </button>
+         </button> -->
       </ul>
    </div>
 </template>

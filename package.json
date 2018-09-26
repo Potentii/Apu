@@ -2,22 +2,45 @@
   "name": "apu",
   "version": "1.0.0",
   "description": "A simple message queue client",
+  "main": "./infra/electron.js",
   "scripts": {
-    "serve": "parcel index.html --out-dir ./parcel-serve --target browser --no-autoinstall",
-    "build": "parcel build index.html --out-dir ./parcel-build --out-file index.html --public-url ./ --target browser --no-cache",
-
+    "serve": "parcel index.html --out-dir ./project/parcel-serve --target browser --no-autoinstall",
+    "build": "parcel build index.html --out-dir ./project/parcel-build --out-file index.html --public-url ./ --target browser --no-cache",
     "electron": "electron ./infra/electron.js",
-
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dist2": "build"
   },
   "build": {
     "appId": "com.potentii.apu",
     "productName": "Apu",
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "files": [
+      "!java${/*}"
+    ],
+    "extraResources": {
+      "from": "java",
+      "to": "java"
+    },
+    "asarUnpack": "java",
     "directories": {
-      "output": "dist"
-    }
+      "output": "./project/electron-dist",
+      "buildResources": "build-electron",
+      "app": "."
+    },
+    "nsis": {
+      "runAfterFinish": true
+    },
+    "asar": true
   },
+  "files": [
+    "*.js",
+    "node_modules",
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Potentii/Apu.git"
@@ -30,7 +53,6 @@
   },
   "homepage": "https://github.com/Potentii/Apu#readme",
   "dependencies": {
-    "electron": "2.0.3",
     "electron-localshortcut": "3.1.0",
     "ipc-bridge-nodejs": "1.0.0",
     "vue": "2.5.16",
@@ -42,6 +64,7 @@
     "@vue/component-compiler-utils": "1.2.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-plugin-transform-runtime": "6.23.0",
+    "electron": "2.0.8",
     "electron-builder": "20.19.2",
     "parcel-bundler": "1.9.4",
     "vue-hot-reload-api": "2.3.0",

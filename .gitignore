@@ -1,10 +1,10 @@
 # Parcel
-/serve
-/build
-/dist
+project/parcel-serve
+project/parcel-build
 /.cache
-/web/dist
-/web/.cache
+
+# Electron
+project/electron-dist
 
 # Logs
 logs

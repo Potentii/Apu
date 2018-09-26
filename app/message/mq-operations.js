@@ -22,7 +22,21 @@ exports.sendMessage = function(mq, connection, message){
 
    const req_builder = req => {
       req.setQuery('operation', 'send-message');
-      req.json({ connection, message });
+      req.json({
+         connection: {
+            host:         connection.host,
+            port:         connection.port,
+            queueManager: connection.queue_manager,
+            channel:      connection.channel,
+            username:     connection.username,
+            password:     connection.password
+         },
+         message: {
+            queueName:     message.queueName,
+            correlationId: message.correlationId,
+            body:          message.body
+         }
+      });
    };
 
    return mq.start()

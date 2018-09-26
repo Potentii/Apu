@@ -40,6 +40,7 @@
 import { mapState, mapActions } from 'vuex'
 import ConnectionResolverMixin from '/app/connection/v-connection-resolver-mixin'
 import QueueResolverMixin from '/app/queue/v-queue-resolver-mixin'
+import UIMessage from '/app/ui-messages/ui-message'
 import Message from '../message'
 import * as ipc from './ipc'
 import TimeoutError from '/infra/timeout-error'
@@ -77,9 +78,7 @@ export default {
    },
 
    methods: {
-      ...mapActions('ui-messages', {
-         'addUIMessage': 'addMessage'
-      }),
+      ...mapActions('ui-messages', { 'addUIMessage': 'addMessage' }),
 
       _onSubmit(){
          this.sending = true;
@@ -92,23 +91,13 @@ export default {
 
          ipc.sendMessage(this.selected_saved_connection.data, message)
             .then(res => {
-               console.log(res);
-               this.addUIMessage({
-                  severity: 'INFO',
-                  content: `Message sent`
-               });
+               this.addUIMessage(new UIMessage(UIMessage.INFO, `Message sent`));
             })
             .catch(err => {
                if(err instanceof TimeoutError){
-                  this.addUIMessage({
-                     severity: 'ERROR',
-                     content: `The MQ server took too long to respond`
-                  });
+                  this.addUIMessage(new UIMessage(UIMessage.ERROR, `The MQ server took too long to respond`));
                } else{
-                  this.addUIMessage({
-                     severity: 'ERROR',
-                     content: `Unexpected error (${err.message})`
-                  });
+                  this.addUIMessage(new UIMessage(UIMessage.ERROR, `Unexpected error (${err.message})`));
                   console.error(err);
                }
             })
@@ -138,10 +127,11 @@ export default {
    font-family: 'Roboto Mono';
 }
 .v-message-sender-view > .-send-message-form > .field > .-input.-message{
-   white-space: nowrap;
+   white-space: pre-wrap;
    resize: vertical;
    min-height: 10em;
    height: 20em;
    font-size: 0.9em;
+   line-height: 1.7em;
 }
 </style>

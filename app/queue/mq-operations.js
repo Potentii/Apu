@@ -17,10 +17,19 @@ exports.listQueues = function(mq, connection){
 
    const req_builder = req => {
       req.setQuery('operation', 'list-queues');
-      req.json({ connection });
-
-      // console.log('\n\n'+JSON.stringify(req)+'\n\n');
+      req.json({
+         connection: {
+            host:         connection.host,
+            port:         connection.port,
+            queueManager: connection.queue_manager,
+            channel:      connection.channel,
+            username:     connection.username,
+            password:     connection.password
+         }
+      });
+      console.log(JSON.stringify(req) + '\n#msg-end');
    };
+
 
    return mq.start()
       .then(_ => mq.send(req_builder))

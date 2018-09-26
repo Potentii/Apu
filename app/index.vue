@@ -99,10 +99,14 @@ export default {
 } .index-page > .-nav > .-item.-logo{
    font-size: 1.3em;
    font-family: 'Roboto Medium';
+   color: var(--m-grey-900);
 } .index-page > .-nav > .-item:not(.-logo){
    text-transform: uppercase;
 } .index-page > .-nav > .-item:hover:not(:last-of-type){
    cursor: pointer;
+} .index-page > .-nav > .-item:hover{
+   text-decoration: none;
+   color: var(--m-grey-900);
 }
 .index-page > .-nav > .-item::after{
    content: '';

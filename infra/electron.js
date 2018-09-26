@@ -26,7 +26,7 @@ const settings = {
       center: true,
       backgroundColor: "#EEEEEE"
    },
-   // address: 'file://' + path.join(__dirname, '../build/index.html')
+   // address: 'file://' + path.join(__dirname, '../project/parcel-build/index.html')
    address: 'http://localhost:1234'
 };
 
@@ -91,11 +91,12 @@ function createWindow(settings){
       win.show();
    });
 
-   // *Removing the default menu bar:
-   win.setMenu(null);
 
    // *Loading the html file:
    win.loadURL(settings.address);
+
+   // *Removing the default menu bar:
+   win.setMenu(null);
 
    createShortcuts(win);
 }

@@ -67,8 +67,8 @@
    --link-fg--visited: var(--m-blue-700);
 
    /* Text selection */
-   --selection-bg: var(--m-cyan-a200);
-   --selection-fg: var(--m-grey-900);
+   --selection-bg: var(--m-green-a400);
+   --selection-fg: var(--m-grey-50);
 }
 
 

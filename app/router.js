@@ -12,6 +12,7 @@ import QueuesView        from './queue/list/v-queues-view'
 import SendMessageView   from './message/send/v-message-sender-view'
 
 
+
 // *Registering vue-router:
 Vue.use(VueRouter);
 
@@ -30,13 +31,13 @@ const router = new VueRouter({
          path: '/index',
          component: IndexPage,
          children: [
-            { name: 'connections',     path: 'connections',                                             component: ConnectionsView },
-            { name: 'new-connection',  path: 'connections/new',                                         component: NewConnectionView },
+            { name: 'connections',     path: 'connections',                                           component: ConnectionsView },
+            { name: 'new-connection',  path: 'connections/new',                                       component: NewConnectionView },
             // { name: 'edit-connection', path: 'connections/:conn_name/edit',                             component: EditConnectionView },
-            { name: 'queues',          path: 'connections/:conn_name/queues',                           component: QueuesView },
+            { name: 'queues',          path: 'connections/:conn_name/queues',                         component: QueuesView },
             // { name: 'new-queue',       path: 'connections/:conn_name/queues/new',                       component: NewQueueView },
             // { name: 'messages',        path: 'connections/:conn_name/queues/:queue_name/messages',      component: MessagesView },
-            { name: 'send-message',    path: 'connections/:conn_name/queues/:queue_name/messages/send', component: SendMessageView },
+            { name: 'send-message',    path: 'connections/:conn_name/queues/:queue_id/messages/send', component: SendMessageView },
             // { name: 'inspect-message', path: 'connections/:conn_name/queues/:queue_name/messages/:msg_id',      component: InspectMessageView },
 
          ]

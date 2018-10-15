@@ -7,8 +7,9 @@
 
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
 import UIMessagesDispatcher from './ui-messages/ui-messages-dispatcher'
+
+
 
 export default {
    name: 'app',
@@ -24,6 +25,9 @@ export default {
 #app{
    width: 100%;
    height: 100%;
+
+   letter-spacing: 0.06em;
+   font-family: 'Roboto', sans-serif;
 
    background-color: var(--blank-bg--base);
    background-image: url('../infra/style/resources/images/noise.png');

@@ -2,28 +2,31 @@
 </template>
 
 
+
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import UIMessage from '/app/ui-messages/ui-message'
-import Queue from './saved-queue'
+import UIMessage                                          from '/app/ui-messages/ui-message'
+
+
 
 export default {
 
    name: 'v-queue-resolver-mixin',
 
    computed: {
-      ...mapState('queue', [ 'selected_queue' ])
+      ...mapState('queue', [ 'selected_queue' ]),
+		...mapGetters('queue', [ 'getQueueById' ])
    },
 
    beforeMount(){
-      const queue_name = this.$route.params.queue_name;
+      const queue_id = this.$route.params.queue_id;
 
-      if(!queue_name){
+      if(!queue_id){
          this.clearSelectedQueue();
          this.addMessage(new UIMessage(UIMessage.SEVERITY.ERROR, `Error while loading the queue`));
          this.$router.go(-1);
       } else{
-         const queue = new Queue(queue_name);
+         const queue = this.getQueueById(queue_id);
          this.setSelectedQueue(queue);
       }
    },

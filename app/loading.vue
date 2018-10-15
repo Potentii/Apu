@@ -5,12 +5,17 @@
 </template>
 
 
+
 <script>
 import { mapMutations, mapActions } from 'vuex'
+import QueueRoot                    from './queue/queue-root';
+
+
 
 export default {
 
    name: 'loading-page',
+
 
    data(){
       return {
@@ -18,23 +23,30 @@ export default {
       };
    },
 
+
    beforeMount(){
       this.load();
    },
 
+
    methods: {
+		...mapMutations('queue', [ 'setQueues' ]),
       ...mapActions('connection', [ 'refreshSavedConnectionsFromCache' ]),
+
 
       loadPreferences(){
 
       },
 
-      load(){
+
+      async load(){
          this.message = 'Loading preferences';
          this.loadPreferences();
          this.message = 'Loading saved connections';
          this.refreshSavedConnectionsFromCache();
 
+
+         this.setQueues(await QueueRoot.loadQueuesFromCache());
 
          const redirect_to = this.$route.params.redirect_to;
          if(redirect_to)
@@ -47,11 +59,10 @@ export default {
          else
             this.$router.push({ name: 'connections' });
       }
-
    }
-
 }
 </script>
+
 
 
 <style>

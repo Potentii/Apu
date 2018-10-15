@@ -38,7 +38,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import ConnectionResolverMixin from './connection/v-connection-resolver-mixin'
+
+
 
 export default {
 
@@ -98,7 +99,7 @@ export default {
    color: var(--m-grey-900);
 } .index-page > .-nav > .-item.-logo{
    font-size: 1.3em;
-   font-family: 'Roboto Medium';
+   font-family: 'Roboto Medium', sans-serif;
    color: var(--m-grey-900);
 } .index-page > .-nav > .-item:not(.-logo){
    text-transform: uppercase;
@@ -159,10 +160,10 @@ export default {
 
 .index-page > .-router > .-view-section-title{
    cursor: default;
-   font-family: 'Roboto Medium';
-   letter-spacing: 0.03em;
+   user-select: none;
+   font-family: 'Roboto Medium', sans-serif;
+   letter-spacing: 0.06em;
    font-size: 1.5em;
    padding: 0.1em var(--h-padding);
-   user-select: none;
 }
 </style>

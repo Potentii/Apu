@@ -1,10 +1,11 @@
-import Queue from '../saved-queue'
 import * as ipc from '/infra/electron-ipc'
 
+
+
 /**
- * Retrieves all the queues for the given connection
+ * Retrieves all the queue names for the given connection
  * @param  {Connection} connection_data The connection info
- * @return {Promise<Queue[]>}           The found queues
+ * @return {Promise<String[]>}          The found queue names
  */
 export function loadQueuesFromConnection(connection_data){
    const data = {
@@ -14,7 +15,6 @@ export function loadQueuesFromConnection(connection_data){
    return ipc.send('queues:list', data, 25000)
       .then(res => {
          return res.data
-            .filter(name => !/^AMQ\..+$/.test(name))
-            .map(name => new Queue(name));
+            .filter(name => !/^AMQ\..+$/.test(name));
       });
 }

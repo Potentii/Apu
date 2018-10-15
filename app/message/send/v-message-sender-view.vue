@@ -21,8 +21,9 @@
          <!-- * FABs list * -->
          <ul class="fab-list">
             <!-- * Send message FAB * -->
-            <button class="fab --raised" :form="$refs.form ? $refs.form.id : null" :disabled="sending || !valid">
-               <i class="material-icons">send</i>
+            <button class="fab --raised" :form="$refs.form ? $refs.form.id : null" :disabled="states.is('sending') || !valid">
+               <i class="material-icons" v-if="states.not('sending')">send</i>
+               <span class="-spinner" v-else><md-progress-spinner md-mode="indeterminate" :md-diameter="28" :md-stroke="3"/></span>
             </button>
          </ul>
       </template>
@@ -38,12 +39,14 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ConnectionResolverMixin from '/app/connection/v-connection-resolver-mixin'
-import QueueResolverMixin from '/app/queue/v-queue-resolver-mixin'
-import UIMessage from '/app/ui-messages/ui-message'
-import Message from '../message'
-import * as ipc from './ipc'
-import TimeoutError from '/infra/timeout-error'
+import ConnectionResolverMixin  from '/app/connection/v-connection-resolver-mixin'
+import QueueResolverMixin       from '/app/queue/v-queue-resolver-mixin'
+import UIMessage                from '/app/ui-messages/ui-message'
+import Message                  from '../message'
+import * as ipc                 from './ipc'
+import TimeoutError             from '/infra/timeout-error'
+import States                   from '../../../infra/states/states';
+
 
 
 export default {
@@ -59,11 +62,11 @@ export default {
 
    data(){
       return {
+      	states: new States(),
          form: {
             correlation_id: '',
             message: ''
-         },
-         sending: false
+         }
       };
    },
 
@@ -79,9 +82,13 @@ export default {
 
    methods: {
       ...mapActions('ui-messages', { 'addUIMessage': 'addMessage' }),
+		...mapActions('queue', [ 'setQueueAsUsedNow' ]),
 
-      _onSubmit(){
-         this.sending = true;
+
+
+      async _onSubmit(){
+			this.states.remove('error');
+         this.states.add('sending');
 
          const message = new Message(
             this.selected_queue.name,
@@ -89,21 +96,24 @@ export default {
             this.form.message
          );
 
-         ipc.sendMessage(this.selected_saved_connection.data, message)
-            .then(res => {
-               this.addUIMessage(new UIMessage(UIMessage.INFO, `Message sent`));
-            })
-            .catch(err => {
-               if(err instanceof TimeoutError){
-                  this.addUIMessage(new UIMessage(UIMessage.ERROR, `The MQ server took too long to respond`));
-               } else{
-                  this.addUIMessage(new UIMessage(UIMessage.ERROR, `Unexpected error (${err.message})`));
-                  console.error(err);
-               }
-            })
-            .then(() => {
-               this.sending = false;
-            })
+         try{
+         	// *Sending the message to the queue:
+				await ipc.sendMessage(this.selected_saved_connection.data, message);
+				// *Setting this queue as used now:
+				this.setQueueAsUsedNow(this.selected_queue);
+				// *Showing a success message to the user:
+				this.addUIMessage(new UIMessage(UIMessage.INFO, `Message sent`));
+			} catch(err){
+				this.states.add('error');
+				if(err instanceof TimeoutError){
+					this.addUIMessage(new UIMessage(UIMessage.ERROR, `The MQ server took too long to respond`));
+				} else{
+					this.addUIMessage(new UIMessage(UIMessage.ERROR, `An error happened:`, `${err.message}`, 12000));
+					console.error(err);
+				}
+			} finally{
+				this.states.remove('sending');
+         }
       }
    }
 
@@ -124,14 +134,20 @@ export default {
 
 .v-message-sender-view > .-send-message-form > .field > .-input.-corr-id,
 .v-message-sender-view > .-send-message-form > .field > .-input.-message{
-   font-family: 'Roboto Mono';
+   font-family: 'Roboto Mono', monospace;
 }
 .v-message-sender-view > .-send-message-form > .field > .-input.-message{
-   white-space: pre-wrap;
+   /*white-space: pre-wrap;*/
+   white-space: nowrap;
    resize: vertical;
    min-height: 10em;
    height: 20em;
    font-size: 0.9em;
    line-height: 1.7em;
+}
+
+
+.v-message-sender-view > .fab-list > .fab > .-spinner .md-progress-spinner{
+   --md-theme-default-primary: var(--m-grey-100);
 }
 </style>

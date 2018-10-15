@@ -10,7 +10,7 @@ const mq_res_utils = require('../../infra/mq-response-utils');
  *                                    driver
  * @param  {Connection} connection    The connection info
  * @param  {Message} message          The message info
- * @return {Promise<IncomingMessage>} A promisse that resolves into the MQ
+ * @return {Promise<IncomingMessage>} A promise that resolves into the MQ
  *                                    driver response
  */
 exports.sendMessage = function(mq, connection, message){
@@ -34,7 +34,7 @@ exports.sendMessage = function(mq, connection, message){
          message: {
             queueName:     message.queueName,
             correlationId: message.correlationId,
-            body:          message.body
+            body:          Buffer.from(message.body).toString('base64')
          }
       });
    };

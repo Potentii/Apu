@@ -1,0 +1,151 @@
+/**
+ * General resets
+ */
+html{
+   font-size: 16px;
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+   overflow: auto;
+}
+.application{
+   background: unset !important;
+   color: unset !important;
+   font-family: unset !important;
+   line-height: unset !important;
+
+   display: flex;
+}
+
+ol, ul {
+   padding-left: unset;
+}
+
+
+.application--wrap{
+   display: unset;
+   -webkit-box-flex: unset;
+   backface-visibility: unset;
+   -webkit-box-orient: unset;
+   -webkit-box-direction: unset;
+   -ms-flex-direction: unset;
+   flex-direction: unset;
+   min-height: unset;
+   max-width: unset;
+   position: unset;
+
+   flex: auto;
+}
+
+
+
+/**
+ * Buttons
+ * --vuetify-btn-fg Sets the Vuetify button foreground color
+ * --vuetify-btn-bg Sets the Vuetify button background color
+ */
+/* Button color variables and height fix */
+.btn{
+   background: var(--vuetify-btn-bg) !important;
+   color: var(--vuetify-btn-fg) !important;
+   height: auto;
+} .btn > .btn__content{
+     padding: 0.8em 0.3em;
+  }
+
+
+p{
+   margin-bottom: unset;
+}
+
+code{
+   background-color: unset;
+   color: unset;
+   box-shadow: unset;
+}
+code, kbd{
+   display: unset;
+   border-radius: unset;
+   white-space: unset;
+   font-size: unset;
+   font-weight: unset;
+} code::after, code::before, kbd::after, kbd::before{
+     content: unset;
+     letter-spacing: unset;
+  }
+code, kbd, pre, samp{
+   font-family: unset;
+}
+
+
+textarea{
+   overflow: unset;
+}
+button, input, optgroup, select, textarea{
+   font: unset;
+}
+select{
+   -moz-appearance: menulist;
+   -webkit-appearance: menulist;
+}
+
+.input-group--text-field.primary--text{
+   color: var(--accent-bg--base) !important;
+}
+
+
+.input-group:not(.input-group--error) .input-group__details:before{
+   opacity: 0.4;
+   background-color: var(--m-grey-900) !important;
+}
+.input-group:not(.input-group--error):hover .input-group__details:before{
+   opacity: 0.7;
+   background-color: var(--accent-bg--base) !important;
+}
+
+
+
+/**
+ * Radio button groups
+ * --vuetify-radio-label-fg Sets the radio text color
+ * --vuetify-radio-label-size Sets the radio label font size
+ * --vuetify-radio-button-size Sets the radio button width and height
+ * --vuetify-radio-ripple-size Sets the radio ripple width and height
+ */
+.input-group.radio-group{
+   --vuetify-radio-label-fg: var(--m-grey-800);
+   --vuetify-radio-label-size: 0.8rem;
+   --vuetify-radio-button-size: 1.2rem;
+   --vuetify-radio-ripple-size: calc(var(--vuetify-radio-button-size) + 0.8rem);
+
+   padding-top: 0;
+}
+.input-group .input-group__input{
+   min-height: calc(var(--vuetify-radio-button-size) + 0.6em);
+}
+/*
+ * Text
+ */
+.input-group.radio-group label{
+   font-size: var(--vuetify-radio-label-size);
+   line-height: var(--vuetify-radio-button-size);
+   left: calc(var(--vuetify-radio-button-size) + 0.6em);
+   color: var(--vuetify-radio-label-fg) !important;
+}
+/*
+ * Button
+ */
+.input-group.radio-group .icon{
+   font-size: var(--vuetify-radio-button-size);
+}
+/*
+ * Ripple
+ */
+.input-group.radio-group .input-group--selection-controls__ripple{
+   --vuetify-radio-ripple-translate: calc(calc(calc(var(--vuetify-radio-ripple-size) - var(--vuetify-radio-button-size)) / 2) * -1);
+
+   top: 0;
+   width: var(--vuetify-radio-ripple-size);
+   height: var(--vuetify-radio-ripple-size);
+   transform: translate(var(--radio-ripple-translate), var(--radio-ripple-translate));
+}

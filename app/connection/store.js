@@ -55,14 +55,14 @@ export default {
 
 
    actions: {
-      refreshSavedConnectionsFromCache({ commit }){
-         const connections = cache.getAllConnections();
+      async refreshSavedConnectionsFromCache({ commit }){
+         const connections = await cache.getAllConnections();
          commit('setSavedConnections', connections);
       },
 
 
-      createNewSavedConnection({ commit }, new_saved_connection){
-         cache.addConnection(new_saved_connection);
+      async createNewSavedConnection({ commit }, new_saved_connection){
+         await cache.addConnection(new_saved_connection);
          commit('addSavedConnection', new_saved_connection);
       }
    }

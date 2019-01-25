@@ -1,12 +1,12 @@
 {
   "name": "apu",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple message queue client",
   "main": "./infra/electron.js",
   "scripts": {
-    "serve": "parcel index.html --out-dir ./project/parcel-serve --target browser --no-autoinstall",
-    "build": "parcel build index.html --out-dir ./project/parcel-build --out-file index.html --public-url ./ --target browser --no-cache",
-    "electron": "electron ./infra/electron.js",
+    "parcel-serve": "parcel index.html --out-dir ./output/parcel-serve --cache-dir ./output/parcel-serve-cache --target browser --port 1234 --no-autoinstall",
+    "parcel-build": "parcel build index.html --out-dir ./output/parcel-build --out-file index.html --public-url ./ --target browser --no-cache --no-minify",
+    "start-electron": "electron ./infra/electron.js",
     "dist": "electron-builder",
     "dist2": "build"
   },
@@ -27,7 +27,7 @@
     },
     "asarUnpack": "java",
     "directories": {
-      "output": "./project/electron-dist",
+      "output": "./output/electron-dist",
       "buildResources": "build-electron",
       "app": "."
     },
@@ -53,21 +53,31 @@
   },
   "homepage": "https://github.com/Potentii/Apu#readme",
   "dependencies": {
+    "@babel/runtime": "7.2.0",
+    "dotenv": "6.2.0",
     "electron-localshortcut": "3.1.0",
-    "ipc-bridge-nodejs": "1.0.2",
-    "vue": "2.5.16",
+    "ipc-bridge-nodejs": "1.0.3",
+    "mkdirp": "0.5.1",
+    "vue": "2.5.21",
     "vue-material": "1.0.0-beta-10.2",
-    "vue-router": "3.0.1",
+    "vue-mdc-adapter": "0.18.2",
+    "vue-router": "3.0.2",
+    "vuetify": "1.3.15",
     "vuex": "3.0.1"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "1.2.1",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "electron": "2.0.8",
-    "electron-builder": "20.19.2",
-    "parcel-bundler": "1.9.4",
-    "vue-hot-reload-api": "2.3.0",
-    "vue-template-compiler": "2.5.16"
+    "@babel/core": "7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "7.2.0",
+    "@babel/plugin-transform-regenerator": "7.0.0",
+    "@babel/plugin-transform-runtime": "7.2.0",
+    "@vue/component-compiler-utils": "1.3.1",
+    "babel-preset-env": "1.7.0",
+    "del": "3.0.0",
+    "electron": "2.0.16",
+    "electron-builder": "20.38.4",
+    "gulp": "4.0.0",
+    "parcel-bundler": "1.11.0",
+    "vue-hot-reload-api": "2.3.1",
+    "vue-template-compiler": "2.5.21"
   }
 }

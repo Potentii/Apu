@@ -6,7 +6,7 @@
          <h1 class="-view-section-title fx--blurred-title">Connections</h1>
 
          <!-- * Connections listing * -->
-         <v-connections-list :connections="saved_connections"/>
+         <v-connections-list :connections="saved_connections"></v-connections-list>
 
          <!-- * FABs list * -->
          <ul class="fab-list">

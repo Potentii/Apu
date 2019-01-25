@@ -2,6 +2,7 @@
 project/parcel-serve
 project/parcel-build
 /.cache
+/output
 
 # Electron
 project/electron-dist

@@ -1,27 +1,39 @@
-export function save(key, obj){
-   localStorage.setItem(key, JSON.stringify(obj));
+const fs = nodeRequire('fs');
+const path = nodeRequire('path');
+const util = nodeRequire('util');
+const writeFile = util.promisify(fs.writeFile);
+const readFile = util.promisify(fs.readFile);
+const remote = nodeRequire('electron').remote;
+const app = remote.app;
+
+const data_dir = path.join(app.getPath('appData'), './Apu/data');
+
+export async function save(key, obj){
+   await writeFile(path.join(data_dir, './' + key), JSON.stringify(obj));
+   // localStorage.setItem(key, JSON.stringify(obj));
 }
 
-export function get(key){
-   const str = localStorage.getItem(key);
+export async function get(key){
+   const str = await readFile(path.join(data_dir, './' + key));
+   // const str = localStorage.getItem(key);
    if(str)
-      return JSON.parse(str);
+      return JSON.parse(str.toString());
 
    return null;
 }
 
-export function getArray(key){
-   const array = get(key) || [];
+export async function getArray(key){
+   const array = (await get(key)) || [];
    if(!Array.isArray(array))
       throw new TypeError(`The cache "${key}" could not be read, as it must store an array`);
 
    return array;
 }
 
-export function addToArray(key, item){
-   const array = getArray(key);
+export async function addToArray(key, item){
+   const array = await getArray(key);
 
    array.push(item);
 
-   save(key, array);
+   await save(key, array);
 }

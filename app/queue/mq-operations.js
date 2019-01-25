@@ -27,7 +27,6 @@ exports.listQueues = function(mq, connection){
             password:     connection.password
          }
       });
-      console.log(JSON.stringify(req) + '\n#msg-end');
    };
 
 

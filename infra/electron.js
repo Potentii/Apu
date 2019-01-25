@@ -1,7 +1,19 @@
 const path = require('path');
+const dotenv = require('dotenv');
 const electron = require('electron');
 const shortcuts = require('electron-localshortcut');
+const migrations = require('../data/update-migration/electron_migrations');
 const { app, BrowserWindow } = electron;
+
+
+// *Getting the environment variables:
+if(process.env.NODE_ENV)
+   dotenv.config({ path: path.join(process.cwd(), `./.env.${process.env.NODE_ENV}`) });
+else
+   dotenv.config({ path: path.join(process.cwd(), `./.env.development`) });
+
+
+// *loading the IPC channels:
 const ipc_routes = require('../app/channels');
 
 
@@ -12,24 +24,26 @@ const ipc_routes = require('../app/channels');
 let win = null;
 
 
-
 /**
  * Window configurations
  * @type {Object}
  */
 const settings = {
    window: {
-      minWidth: 450,
-      minHeight: 450,
-      width: 860,
-      height: 600,
+      minWidth:  process.env.WINDOW_MIN_WIDTH  || 450,
+      minHeight: process.env.WINDOW_MIN_HEIGHT || 450,
+      width:  process.env.WINDOW_WIDTH  || 860,
+      height: process.env.WINDOW_HEIGHT || 600,
       center: true,
       backgroundColor: "#EEEEEE"
    },
-   // address: 'file://' + path.join(__dirname, '../project/parcel-build/index.html')
-   address: 'http://localhost:1234'
+   // *Checking if the address of the window content is HTTP(S):
+   address: /^http/i.test(process.env.PAGE_ADDRESS)
+      // *If it is, simply setting it as the address:
+      ? process.env.PAGE_ADDRESS
+      // *If it's not, assuming the address is a file relative to the project root:
+      : `fille://${path.join(process.cwd(), process.env.PAGE_ADDRESS)}`
 };
-
 
 
 // *When electron is ready:
@@ -56,7 +70,6 @@ app.on('window-all-closed', () => {
 });
 
 
-
 // *When user re-focus the application:
 app.on('activate', () => {
    // *Checking if windows reference is lost:
@@ -67,12 +80,11 @@ app.on('activate', () => {
 });
 
 
-
 /**
  * Creates a new window frame
  * @author Guilherme Reginaldo Ruella
  */
-function createWindow(settings){
+async function createWindow(settings){
 
    const window_settings = settings.window;
    window_settings.show = false;
@@ -91,7 +103,6 @@ function createWindow(settings){
       win.show();
    });
 
-
    // *Loading the html file:
    win.loadURL(settings.address);
 
@@ -99,6 +110,9 @@ function createWindow(settings){
    win.setMenu(null);
 
    createShortcuts(win);
+
+   // *Execute the update migrations:
+   await executeMigrations();
 }
 
 
@@ -129,4 +143,9 @@ function createShortcuts(win){
 
 function removeShortcuts(win){
    shortcuts.unregisterAll(win);
+}
+
+
+async function executeMigrations(){
+   await migrations.execute();
 }

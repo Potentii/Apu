@@ -3,6 +3,8 @@ import QueueVO              from './queue-vo';
 import * as queues_list_ipc from './list/ipc';
 
 
+const QUEUES_DATA_FILE = 'queues.json';
+
 
 export default class QueueRoot{
 	constructor(){ }
@@ -13,7 +15,7 @@ export default class QueueRoot{
 	 * @returns {Promise<QueueVO[]>}
 	 */
 	static async loadQueuesFromCache(){
-		return cache.getArray('apu:queues')
+		return (await cache.getArray(QUEUES_DATA_FILE))
 			// *Casting the entries to the VO:
 			.map(QueueVO.from);
 	}
@@ -25,7 +27,7 @@ export default class QueueRoot{
 	 * @returns {Promise<void>}
 	 */
 	static async saveQueuesOnCache(queues){
-		return cache.save('apu:queues', queues);
+		return await cache.save(QUEUES_DATA_FILE, queues);
 	}
 
 

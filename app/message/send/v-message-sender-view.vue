@@ -2,7 +2,20 @@
    <div class="v-message-sender-view">
 
       <template v-if="selected_saved_connection && selected_queue">
-         <h1 class="-view-section-title">New message</h1>
+
+         <div class="-view-section-title">
+            <span>New message</span>
+            <div class="-snippets">
+
+               <div class="v-snippets-combobox">
+                  <!--<v-combobox-->
+                     <!--v-model="selected_snippet"-->
+                     <!--:items="snippets"-->
+                     <!--label="Snippet"-->
+                     <!--solo></v-combobox>-->
+               </div>
+            </div>
+         </div>
 
          <form class="-send-message-form" ref="form" v-id @submit.prevent="_onSubmit">
 
@@ -23,7 +36,7 @@
             <!-- * Send message FAB * -->
             <button class="fab --raised" :form="$refs.form ? $refs.form.id : null" :disabled="states.is('sending') || !valid">
                <i class="material-icons" v-if="states.not('sending')">send</i>
-               <span class="-spinner" v-else><md-progress-spinner md-mode="indeterminate" :md-diameter="28" :md-stroke="3"/></span>
+               <span class="-spinner" v-else><md-progress-spinner md-mode="indeterminate" :md-diameter="28" :md-stroke="3"></md-progress-spinner></span>
             </button>
          </ul>
       </template>
@@ -62,6 +75,10 @@ export default {
 
    data(){
       return {
+			selected_snippet: null,
+         snippets: [
+         	'oi1', 'oi2', 'oi3'
+         ],
       	states: new States(),
          form: {
             correlation_id: '',
@@ -146,7 +163,10 @@ export default {
    line-height: 1.7em;
 }
 
-
+.v-message-sender-view > .fab-list > .fab > .-spinner{
+   display: flex;
+   align-content: center;
+}
 .v-message-sender-view > .fab-list > .fab > .-spinner .md-progress-spinner{
    --md-theme-default-primary: var(--m-grey-100);
 }

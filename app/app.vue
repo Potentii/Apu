@@ -1,8 +1,10 @@
 <template>
-   <div id="app">
-      <router-view/>
-      <ui-messages-dispatcher/>
-   </div>
+   <v-app class="app">
+      <div class="app-content">
+         <router-view></router-view>
+         <ui-messages-dispatcher></ui-messages-dispatcher>
+      </div>
+   </v-app>
 </template>
 
 
@@ -22,7 +24,11 @@ export default {
 
 
 <style>
-#app{
+.app{
+   width: 100%;
+   height: 100%;
+}
+.app.application > .application--wrap > .app-content{
    width: 100%;
    height: 100%;
 
@@ -32,6 +38,7 @@ export default {
    background-color: var(--blank-bg--base);
    background-image: url('../infra/style/resources/images/noise.png');
    background-blend-mode: hard-light;
+   background-repeat: repeat;
 
    --fab-background-color: var(--accent-bg--base);
    --fab-foreground-color: var(--accent-fg--base);

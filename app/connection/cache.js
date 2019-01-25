@@ -1,28 +1,29 @@
 import SavedConnection from './saved-connection'
 import * as cache from '/infra/cache/util'
 
-const CONNECTIONS_CACHE_KEY = 'apu:saved-connections';
+// const CONNECTIONS_CACHE_KEY = 'apu:saved-connections';
+const CONNECTIONS_CACHE_KEY = 'connections.json';
 
-export function getAllConnections(){
-   return cache.getArray(CONNECTIONS_CACHE_KEY)
+export async function getAllConnections(){
+   return (await cache.getArray(CONNECTIONS_CACHE_KEY))
       .map(item => SavedConnection.from(item));
 }
 
-export function addConnection(new_saved_connection){
-   const connections = getAllConnections();
+export async function addConnection(new_saved_connection){
+   const connections = await getAllConnections();
 
    connections.push(new_saved_connection);
 
-   cache.save(CONNECTIONS_CACHE_KEY, connections);
+   await cache.save(CONNECTIONS_CACHE_KEY, connections);
 }
 
-export function removeConnection(saved_connection_to_remove){
-   const connections = getAllConnections();
+export async function removeConnection(saved_connection_to_remove){
+   const connections = await getAllConnections();
 
    const index = connections
       .findIndex(connection => connection.equals(saved_connection_to_remove));
 
    connections.splice(index, 1);
 
-   cache.save(CONNECTIONS_CACHE_KEY, connections);
+   await cache.save(CONNECTIONS_CACHE_KEY, connections);
 }

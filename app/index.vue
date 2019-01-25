@@ -29,7 +29,7 @@
       </nav>
 
       <!-- * Navigation view * -->
-      <router-view class="-router"/>
+      <router-view class="-router"></router-view>
 
    </div>
 </template>

@@ -22,8 +22,28 @@ export default class UIMessage extends EventEmitter {
       this.date = Date.now();
    }
 
+   get id(){
+      return '' + this.severity + this.title + this.description + this.date + this.life;
+   }
+
    static get SEVERITY(){
       return SEVERITY;
+   }
+
+   static get SUCCESS(){
+      return SEVERITY.SUCCESS;
+   }
+
+   static get ERROR(){
+      return SEVERITY.ERROR;
+   }
+
+   static get WARNING(){
+      return SEVERITY.WARNING;
+   }
+
+   static get INFO(){
+      return SEVERITY.INFO;
    }
 
    static get ACTION(){

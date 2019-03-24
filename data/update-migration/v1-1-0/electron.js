@@ -20,7 +20,7 @@ async function migrateStorageToDataFile(storage_key, file_name){
 		throw new Error('No browser windows were found');
 
 	const main_window = all_windows[0];
-	const saved_connections_str = await main_window.webContents.executeJavaScript(`localStorage.getItem('${storage_key}')`);
+	const saved_connections_str = await main_window.webContents.executeJavaScript(`localStorage ? localStorage.getItem('${storage_key}') : null`);
 
 	if(!saved_connections_str)
 		return;

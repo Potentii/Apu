@@ -14,8 +14,15 @@ export async function save(key, obj){
 }
 
 export async function get(key){
-   const str = await readFile(path.join(data_dir, './' + key));
-   // const str = localStorage.getItem(key);
+   let str;
+   try{
+      str = await readFile(path.join(data_dir, './' + key));
+   } catch(err){
+      if(err.code == 'ENOENT')
+         return null;
+
+      throw err;
+   }
    if(str)
       return JSON.parse(str.toString());
 

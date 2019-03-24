@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import connection_module  from './connection/store'
 import queue_module       from './queue/store'
 import message_module     from './message/store'
+import snippet_module     from './snippet/store'
 import ui_messages_module from './ui-messages/store'
 
 Vue.use(Vuex);
@@ -13,6 +14,7 @@ export default new Vuex.Store({
       'connection':  connection_module,
       'queue':       queue_module,
       'message':     message_module,
+      'snippet':     snippet_module,
       'ui-messages': ui_messages_module
    }
 });

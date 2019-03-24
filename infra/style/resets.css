@@ -38,11 +38,11 @@ button:hover{
 
 
 /* Selection */
-::selection{
-   background-color: var(--selection-bg);
-   color: var(--selection-fg);
-   text-shadow: inherit;
-}
+/*::selection{*/
+   /*background-color: var(--selection-bg);*/
+   /*color: var(--selection-fg);*/
+   /*text-shadow: inherit;*/
+/*}*/
 
 html{
    overflow: auto;

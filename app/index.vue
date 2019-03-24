@@ -5,7 +5,7 @@
       <nav class="-nav text--ui-label">
 
          <!-- * Home link * -->
-         <router-link class="-item -logo" to="/index/connections">
+         <router-link class="-item -logo" to="/index/connections" :title="!!selected_saved_connection ? 'Back to connections' : ''">
             <!-- TODO add icon -->
             <span class="-text fx--blurred-title">Apu</span>
          </router-link>
@@ -13,8 +13,9 @@
          <!-- * Connection link * -->
          <template v-if="selected_saved_connection">
             <i class="-arrow material-icons -fade-in">navigate_next</i>
-            <router-link class="-item -fade-in" :to="'/index/connections/' + selected_saved_connection.name + '/queues'" :disabled="true">
-               {{ selected_saved_connection.name }}
+            <router-link class="-item -fade-in" :to="'/index/connections/' + selected_saved_connection.name + '/queues'" :title="!!selected_queue ? 'Back to queues' : ''" :disabled="true">
+               <span class="-label">{{ selected_saved_connection.name }}</span>
+               <span class="-selection"></span>
             </router-link>
          </template>
 
@@ -22,7 +23,8 @@
          <template v-if="selected_saved_connection && selected_queue">
             <i class="-arrow material-icons -fade-in">navigate_next</i>
             <router-link class="-item -fade-in" :to="'/index/connections/' + selected_saved_connection.name + '/queues/' + selected_queue.name + '/messages/send'">
-               {{ selected_queue.name }}
+               <span class="-label">{{ selected_queue.name }}</span>
+               <span class="-selection"></span>
             </router-link>
          </template>
 
@@ -80,11 +82,20 @@ export default {
    display: flex;
    flex-direction: row;
    align-items: stretch;
-   /* padding: 0.6em calc(var(--h-padding) * 2 / 3); */
-   padding: 0.6em var(--h-padding);
+
+   padding: 0 var(--h-padding);
+
+   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+
+   overflow: visible;
+   z-index: 6;
 }
 
-.index-page > .-nav > .-item,
+.index-page > .-nav > .-item{
+   display: flex;
+   align-items: stretch;
+   overflow: visible;
+}
 .index-page > .-nav > .-arrow {
    display: flex;
    align-items: center;
@@ -94,7 +105,7 @@ export default {
  * Breadcrumb items
  */
 .index-page > .-nav > .-item{
-   padding: 0.1rem 0;
+   padding: 0.6rem 1rem;
    letter-spacing: 0.05em;
    color: var(--m-grey-900);
 } .index-page > .-nav > .-item.-logo{
@@ -108,23 +119,51 @@ export default {
 } .index-page > .-nav > .-item:hover{
    text-decoration: none;
    color: var(--m-grey-900);
+} .index-page > .-nav > .-item:first-of-type{
+   padding-left: 0;
 }
-.index-page > .-nav > .-item::after{
-   content: '';
+
+.index-page > .-nav > .-item > .-label{
+   display: inline-block;
+   z-index: 1;
+}
+.index-page > .-nav > .-item > .-selection{
    opacity: 0;
+   display: block;
    position: absolute;
-   left: 0;
-   bottom: -1px;
    width: 100%;
-   height: 3px;
-   background-color: #000;
-   transform: translateY(-3px);
+   height: 100%;
+   top: 0;
+   left: 0;
+   background: linear-gradient(
+      to left,
+      rgba(0, 230, 118, 0.8),
+      rgba(29, 233, 182, 0)
+   );
+   background-blend-mode: hard-light;
+
+   transform: translateX(3em);
+
+   border-top-right-radius: 2em;
+   border-bottom-right-radius: 2em;
+
+   box-shadow: 9px 0 15px -6px rgba(0, 230, 118, 0.5);
+
+   overflow: visible;
+
    transition: opacity, transform, 0.12s ease;
-} .index-page > .-nav > .-item:hover::after,
-  .index-page > .-nav > .-item:last-of-type::after{
+} .index-page > .-nav > .-item:last-of-type > .-selection{
    opacity: 1;
-   transform: translateY(0);
+   transform: translateX(0);
 }
+
+.index-page > .-nav > .-item:last-of-type > .-label{
+   font-family: 'Roboto Medium', sans-serif;
+}
+.index-page > .-nav > .-item:hover > .-label{
+   font-family: 'Roboto Medium', sans-serif;
+}
+
 
 .index-page > .-nav > .-fade-in{
    animation-name: index-page-nav-fade-in;
@@ -149,21 +188,25 @@ export default {
  */
 .index-page > .-nav > .-arrow{
    font-size: 1.3em;
-   margin: 0 0.3rem;
+   margin: 0 0;
    color: var(--m-grey-400);
 }
 
 
 .index-page > .-router{
-   overflow: auto;
+
+   /*overflow: hidden;*/
+   /*flex-grow: 0;*/
+   /*flex-shrink: 1;*/
+   /*height: max-content;*/
 }
 
-.index-page > .-router > .-view-section-title{
-   cursor: default;
-   user-select: none;
-   font-family: 'Roboto Medium', sans-serif;
-   letter-spacing: 0.06em;
-   font-size: 1.5em;
-   padding: 0.1em var(--h-padding);
-}
+/*.index-page > .-router > .-view-section-title{*/
+   /*cursor: default;*/
+   /*user-select: none;*/
+   /*font-family: 'Roboto Medium', sans-serif;*/
+   /*letter-spacing: 0.06em;*/
+   /*font-size: 1.5em;*/
+   /*padding: 0.1em var(--h-padding);*/
+/*}*/
 </style>

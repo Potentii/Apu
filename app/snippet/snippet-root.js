@@ -10,19 +10,21 @@ export default class SnippetRoot{
 
 
 	/**
-	 *
-	 * @returns {Promise<SnippetVO[]>}
+	 * Retrieves all the snippets saved on user's cache
+	 * @returns {Promise<SnippetVO[]>} The snippets from cache
 	 */
 	static async loadSnippetsFromCache(){
 		return (await cache.getArray(SNIPPETS_DATA_FILE))
-		// *Casting the entries to the VO:
+			// *Filtering only the valid snippets:
+			.filter(SnippetVO.isValid)
+			// *Casting the entries to the VO:
 			.map(SnippetVO.from);
 	}
 
 
 	/**
-	 *
-	 * @param {SnippetVO[]} snippets
+	 * Updates the snippets cache with the new snippets list
+	 * @param {SnippetVO[]} snippets The new snippets list
 	 * @returns {Promise<void>}
 	 */
 	static async saveSnippetsOnCache(snippets){

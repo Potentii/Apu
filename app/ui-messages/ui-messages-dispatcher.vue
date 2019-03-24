@@ -1,6 +1,6 @@
 <template>
    <ul class="ui-messages-dispatcher">
-      <li class="-message" :data-severity="message.severity" v-for="message in messages">
+      <li class="-message" :key="message.id" :data-severity="message.severity" v-for="message in messages">
 
          <div class="-content">
             <span class="-title">{{ message.title }}</span>
@@ -61,25 +61,28 @@ export default {
 
    bottom: 1em;
    left: 1em;
-
-   width: 25rem;
-   max-width: 25rem;
+   /*bottom: 0;*/
+   /*left: 0;*/
+   /*width: 100vw;*/
+   width: 30rem;
+   max-width: 100%;
 }
 .ui-messages-dispatcher > .-message{
+   --strip-width: 6px;
    display: grid;
    align-items: center;
-   grid-template-columns: auto 1fr auto auto;
+   grid-template-columns: auto minmax(3em, 1fr) auto auto;
    grid-template-areas:
-      'content     ... undo dismiss';
+      'content ... undo dismiss';
 
-   padding: 1em 1.5em;
+   padding: 1.4em 1.5em;
    margin-top: 0.8em;
 
-   border-radius: 7px;
-   color: var(--m-grey-50);
-   background-color: var(--m-grey-800);
+   border-radius: var(--strip-width);
+   color: var(--m-grey-800);
+   background-color: var(--m-grey-50);
 
-   box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.3);
+   box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.2);
 
    overflow: hidden;
 
@@ -88,21 +91,25 @@ export default {
    animation-timing-function: ease;
 }
 .ui-messages-dispatcher > .-message::before{
+   --strip-color: var(--m-grey-500);
    content: '';
    position: absolute;
    top: 0;
    left: 0;
-   width: 8px;
+   width: calc(var(--strip-width) * 2);
    height: 100%;
+   background-image: linear-gradient(to top, rgba(255, 255, 255, 0), var(--strip-color) 180%);
 } .ui-messages-dispatcher > .-message[data-severity="SUCCESS"]::before{
-   background-color: var(--m-green-a400);
+   --strip-color: var(--m-green-a400);
 } .ui-messages-dispatcher > .-message[data-severity="INFO"]::before{
-   background-color: var(--m-blue-600);
+   --strip-color: var(--m-cyan-a400);
 } .ui-messages-dispatcher > .-message[data-severity="WARNING"]::before{
-   background-color: var(--m-yellow-700);
+   --strip-color: var(--m-yellow-a400);
 } .ui-messages-dispatcher > .-message[data-severity="ERROR"]::before{
-   background-color: var(--m-red-800);
+   --strip-color: var(--m-red-a400);
 }
+
+
 .ui-messages-dispatcher > .-message > .-content{
    grid-area: content;
 }
@@ -120,11 +127,23 @@ export default {
 
       width: 100vw;
       max-width: 100vw;
+
+      box-shadow: 0 -5px 20px -4px rgba(0,0,0,0.1);
    }
    .ui-messages-dispatcher > .-message{
       margin-top: 0;
       border-radius: 0;
       box-shadow: none;
+   }
+
+   .ui-messages-dispatcher > .-message + .-message::after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(0,0,0,0.05);
    }
 }
 
@@ -146,8 +165,8 @@ export default {
 }
 .ui-messages-dispatcher > .-message > .-dismiss-btn,
 .ui-messages-dispatcher > .-message > .-undo-btn{
-   opacity: 0.6;
-   color: var(--m-grey-50);
+   opacity: 1;
+   color: var(--m-grey-700);
    user-select: none;
 }
 

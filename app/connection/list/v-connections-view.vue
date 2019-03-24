@@ -2,11 +2,26 @@
    <div class="v-connections-view">
 
       <template v-if="saved_connections && saved_connections.length">
-         <!-- * View main title * -->
-         <h1 class="-view-section-title fx--blurred-title">Connections</h1>
 
-         <!-- * Connections listing * -->
-         <v-connections-list :connections="saved_connections"></v-connections-list>
+         <!-- * Section header * -->
+         <v-apu-section-header class="-header" title_class="-header-title" content_class="-header-content" no_separator>
+
+            <!-- * Title * -->
+            <span class="-title" slot="title">
+               <span class="-name">Connections</span>
+            </span>
+
+         </v-apu-section-header>
+
+
+         <!-- * Content * -->
+         <v-faded-viewport class="-main" content_class="-main-content">
+
+            <!-- * Connections listing * -->
+            <v-connections-list :connections="saved_connections"></v-connections-list>
+
+         </v-faded-viewport>
+
 
          <!-- * FABs list * -->
          <ul class="fab-list">
@@ -15,7 +30,9 @@
                <i class="material-icons">add</i>
             </router-link>
          </ul>
+
       </template>
+
 
       <!-- * No connections state * -->
       <template v-else>
@@ -39,14 +56,18 @@
 
 
 <script>
-import { mapState } from 'vuex'
-import ConnectionsList from './v-connections-list'
+import { mapState }      from 'vuex'
+import ConnectionsList   from './v-connections-list'
+import VApuSectionHeader from '../../../infra/ui/v-apu-section-header';
+import VFadedViewport    from '../../../infra/ui/v-faded-viewport';
 
 export default {
 
    name: 'v-connections-view',
 
    components: {
+		VFadedViewport,
+		VApuSectionHeader,
       'v-connections-list': ConnectionsList
    },
 
@@ -61,13 +82,54 @@ export default {
 
 <style>
 .v-connections-view{
+   display: flex;
+   flex-direction: column;
    height: 100%;
 }
 
-.v-connections-view > .v-connections-list{
-   padding-top: 1rem;
-   padding-bottom: 4rem;
+
+/**
+ * Header
+ */
+.v-connections-view > .-header{
+   /*margin-bottom: 1rem;*/
+   position: absolute;
+   z-index: 4;
 }
+
+.v-connections-view > .-header .-header-title > .-title{
+   cursor: default;
+}
+.v-connections-view > .-header .-header-title > .-title > .-name{
+   font-size: 1.2em;
+}
+
+
+.v-connections-view > .-main{
+   flex-grow: 1;
+   height: 100%;
+}
+.v-connections-view > .-main .-main-content{
+   display: flex;
+   flex-direction: column;
+
+   padding-top: 4.5rem;
+   padding-bottom: 5rem;
+
+   overflow: auto;
+}
+
+.v-connections-view > .-main .-main-content > .v-connections-list{
+   /*padding-top: 1rem;*/
+   /*padding-bottom: 4rem;*/
+}
+
+
+.v-connections-view > .fab-list{
+   z-index: 8;
+}
+
+
 
 .v-connections-view > .-no-connections-state{
    display: flex;

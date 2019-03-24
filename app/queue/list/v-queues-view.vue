@@ -1,32 +1,56 @@
 <template>
    <div class="v-queues-view">
 
-      <h1 class="-view-section-title -title">
-         <span class="-title">Queues</span>
-         <md-button class="-refresh md-dense" type="button" @click="loadQueues" :disabled="states.is('loading')">
-            <span v-if="states.not('loading')">Refresh</span>
-            <!--<md-icon v-if="states.not('loading')">refresh</md-icon>-->
-            <span class="-spinner" v-else>
-               <md-progress-spinner md-mode="indeterminate" :md-diameter="24" :md-stroke="3"/>
-            </span>
-         </md-button>
-      </h1>
 
-      <div class="-empty" v-if="states.not('loading') && states.not('error') && isConnectionQueuesLoaded(selected_saved_connection) && !getQueuesOfConnection(selected_saved_connection).length">
-         <span>No queues found</span>
-      </div>
+      <!-- * Section header * -->
+      <v-apu-section-header class="-header" title_class="-header-title" content_class="-header-content">
 
-      <div class="-list-group -starred" v-if="getStarredQueuesOfConnection(selected_saved_connection).length">
-         <v-queues-list class="-list" name="Favorite" :queues="getStarredQueuesOfConnection(selected_saved_connection)"/>
-      </div>
+         <!-- * Title * -->
+         <span class="-title" slot="title">
+            <span class="-name">Queues</span>
+         </span>
 
-      <div class="-list-group -last-used" v-if="getLastUsedQueuesOfConnection(selected_saved_connection).length">
-         <v-queues-list class="-list" name="Last used" :queues="getLastUsedQueuesOfConnection(selected_saved_connection)"/>
-      </div>
 
-      <div class="-list-group -all" v-if="getQueuesOfConnection(selected_saved_connection).length">
-         <v-queues-list class="-list" name="All queues" :queues="getQueuesOfConnection(selected_saved_connection)"/>
-      </div>
+         <!-- * Model controls * -->
+         <div class="-controls" slot="content">
+
+            <md-button class="-control -refresh"
+                       @click="loadQueues"
+                       :title="states.is('loading') ? 'Refreshing list...' : 'Refresh queues list'">
+               <span v-if="states.not('loading')">Refresh</span>
+               <span class="-spinner" v-else>
+                  <md-progress-spinner md-mode="indeterminate" :md-diameter="24" :md-stroke="3"/>
+               </span>
+            </md-button>
+
+         </div>
+
+      </v-apu-section-header>
+
+
+      <!-- * Content * -->
+      <v-faded-viewport class="-main" content_class="-main-content">
+
+         <div class="-empty" v-if="states.not('loading') && states.not('error') && isConnectionQueuesLoaded(selected_saved_connection) && !getQueuesOfConnection(selected_saved_connection).length">
+            <span>No queues found</span>
+         </div>
+
+
+         <div class="-list-group -starred" v-if="getStarredQueuesOfConnection(selected_saved_connection).length">
+            <v-queues-list class="-list" name="Favorite" :queues="getStarredQueuesOfConnection(selected_saved_connection)"/>
+         </div>
+
+
+         <div class="-list-group -last-used" v-if="getLastUsedQueuesOfConnection(selected_saved_connection).length">
+            <v-queues-list class="-list" name="Last used" :queues="getLastUsedQueuesOfConnection(selected_saved_connection)"/>
+         </div>
+
+
+         <div class="-list-group -all" v-if="getQueuesOfConnection(selected_saved_connection).length">
+            <v-queues-list class="-list" name="All queues" :queues="getQueuesOfConnection(selected_saved_connection)"/>
+         </div>
+
+      </v-faded-viewport>
 
    </div>
 </template>
@@ -35,11 +59,13 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import QueuesList               from './v-queues-list'
-import ConnectionResolverMixin  from '/app/connection/v-connection-resolver-mixin'
-import UIMessage                from '/app/ui-messages/ui-message'
-import TimeoutError             from '/infra/timeout-error'
-import States                   from '/infra/states/states';
+import QueuesList              from './v-queues-list'
+import ConnectionResolverMixin from '/app/connection/v-connection-resolver-mixin'
+import UIMessage               from '/app/ui-messages/ui-message'
+import TimeoutError            from '/infra/timeout-error'
+import States                  from '/infra/states/states';
+import VApuSectionHeader       from '../../../infra/ui/v-apu-section-header';
+import VFadedViewport          from '../../../infra/ui/v-faded-viewport';
 
 
 
@@ -52,6 +78,8 @@ export default {
    ],
 
    components: {
+		VFadedViewport,
+		VApuSectionHeader,
       'v-queues-list': QueuesList
    },
 
@@ -83,6 +111,9 @@ export default {
 		...mapMutations('queue', [ 'markConnectionAsLoaded', 'markConnectionAsNotLoaded' ]),
 
 		async loadQueues(){
+      	if(this.states.is('loading'))
+      		return;
+
 			this.states.remove('error');
 
 			try{
@@ -114,34 +145,58 @@ export default {
 
 <style>
 .v-queues-view{
+   display: flex;
+   flex-direction: column;
    height: 100%;
 }
-.v-queues-view > .v-queues-list{
-   margin-top: 1rem;
-   margin-bottom: 4rem;
-}
 
 
 
-.v-queues-view > .-title{
-   display: grid;
-   grid-template-columns: auto 1fr auto;
-   grid-template-areas:
-      'title ... refresh';
-   align-items: center;
-}
-.v-queues-view > .-title > .-title{
-   grid-area: title;
-}
-.v-queues-view > .-title > .-refresh{
-   grid-area: refresh;
+/**
+ * Header
+ */
+.v-queues-view > .-header{
+   position: absolute;
+   z-index: 4;
+
 }
 
-.v-queues-view > .-list-group + .-list-group{
-   margin-top: 1em;
+.v-queues-view > .-header .-header-title > .-title{
+   cursor: default;
+}
+.v-queues-view > .-header .-header-title > .-title > .-name{
+   font-size: 1.2em;
 }
 
-.v-queues-view > .-title > .-refresh .-spinner .md-progress-spinner{
+
+.v-queues-view > .-header .-header-content > .-controls > .-control{
+   border-radius: 3rem;
+   min-width: max-content;
+}
+.v-queues-view > .-header .-header-content > .-controls > .-control.md-button .md-button-content{
+   padding-right: 1em;
+   padding-left: 1em;
+}
+.v-queues-view > .-header .-header-content > .-controls > .-refresh .-spinner .md-progress-spinner{
    --md-theme-default-primary: var(--m-grey-600);
+}
+
+
+.v-queues-view > .-main{
+   flex-grow: 1;
+   height: 100%;
+}
+.v-queues-view > .-main .-main-content{
+   display: flex;
+   flex-direction: column;
+
+   padding-top: 4.5rem;
+   padding-bottom: 5rem;
+
+   overflow: auto;
+}
+
+.v-queues-view > .-main .-main-content > .-list-group + .-list-group{
+   margin-top: 1em;
 }
 </style>

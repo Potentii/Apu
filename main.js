@@ -3,7 +3,9 @@ import Vue from 'vue'
 import App          from './app/app.vue'
 import router       from './app/router'
 import store        from './app/store'
+import DialogPlugin from '/infra/ui/dialog/plugin'
 import                   './infra/plugins/id'
+import                   './infra/plugins/vue-shortkey'
 import                   './infra/style/material'
 import                   './infra/style/vuetify/loader'
 import * as updates from './data/update-migration/migration'
@@ -11,6 +13,7 @@ import * as updates from './data/update-migration/migration'
 
 Vue.config.productionTip = true;
 
+Vue.use(DialogPlugin, { store });
 
 (async () => {
 

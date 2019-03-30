@@ -1,68 +1,100 @@
 <template>
    <div class="v-connection-creator-view">
-      <h1 class="-view-section-title">New connection</h1>
+<!--      <h1 class="-view-section-title">New connection</h1>-->
+
+      <!-- * Section header * -->
+      <v-apu-section-header class="-header" title_class="-header-title" content_class="-header-content" no_separator>
+
+         <!-- * Title * -->
+         <span class="-title" slot="title">
+               <span class="-name">New connection</span>
+            </span>
+
+      </v-apu-section-header>
 
 
+      <!-- * Content * -->
+      <v-faded-viewport class="-main" content_class="-main-content">
 
-      <form class="-create-connection-form" ref="form" v-id @submit.prevent="_onSubmit">
+         <form class="-create-connection-form" ref="form" v-id @submit.prevent="_onSubmit">
 
-         <div class="field -name --required">
-            <label class="-label">Name</label>
-            <input class="-input" type="text" v-model="form.name" placeholder="Dev, production environment, etc" title="A name that identifies this connection" required autofocus/>
-         </div>
-         <div class="field -description">
-            <label class="-label">Description</label>
-            <input class="-input" type="text" v-model="form.description"/>
-         </div>
-         <div class="field -host --required">
-            <label class="-label">Host</label>
-            <input class="-input" type="text" v-model="form.host" placeholder="The IP address of the MQ server" required/>
-         </div>
-         <div class="field -port --required">
-            <label class="-label">Port</label>
-            <input class="-input" type="text" v-model="form.port" placeholder="The IP address port" required/>
-         </div>
-         <div class="field -queue-manager --required">
-            <label class="-label">Queue manager</label>
-            <input class="-input" type="text" v-model="form.queue_manager" required/>
-         </div>
-         <div class="field -channel">
-            <label class="-label">Channel</label>
-            <input class="-input" type="text" v-model="form.channel"/>
-         </div>
-         <div class="field -username">
-            <label class="-label">Username</label>
-            <input class="-input" type="text" v-model="form.username"/>
-         </div>
-         <div class="field -password">
-            <label class="-label">Password</label>
-            <input class="-input" type="text" v-model="form.password"/>
-         </div>
+            <div class="field -name --required">
+               <label class="-label">Name</label>
+               <input class="-input" type="text" v-model="form.name" placeholder="Dev, production environment, etc" title="A name that identifies this connection" required autofocus/>
+            </div>
+            <div class="field -description">
+               <label class="-label">Description</label>
+               <input class="-input" type="text" v-model="form.description"/>
+            </div>
+            <div class="field -host --required">
+               <label class="-label">Host</label>
+               <input class="-input" type="text" v-model="form.host" placeholder="The IP address of the MQ server" required/>
+            </div>
+            <div class="field -port --required">
+               <label class="-label">Port</label>
+               <input class="-input" type="text" v-model="form.port" placeholder="The IP address port" required/>
+            </div>
+            <div class="field -queue-manager --required">
+               <label class="-label">Queue manager</label>
+               <input class="-input" type="text" v-model="form.queue_manager" required/>
+            </div>
+            <div class="field -channel">
+               <label class="-label">Channel</label>
+               <input class="-input" type="text" v-model="form.channel"/>
+            </div>
+            <div class="field -username">
+               <label class="-label">Username</label>
+               <input class="-input" type="text" v-model="form.username"/>
+            </div>
+            <div class="field -password">
+               <label class="-label">Password</label>
+               <input class="-input" type="text" v-model="form.password"/>
+            </div>
 
-         <div class="-action">
-            <!-- <button type="submit"><i class="material-icons">swap_horiz</i><span>Test connection</span></button> -->
-            <!-- <button type="submit"><i class="material-icons">done</i></button> -->
-         </div>
+            <div class="-action">
+               <!-- <button type="submit"><i class="material-icons">swap_horiz</i><span>Test connection</span></button> -->
+               <!-- <button type="submit"><i class="material-icons">done</i></button> -->
+            </div>
 
-      </form>
+         </form>
 
-      <ul class="fab-list">
-         <button class="fab --raised"
-            @click="action='CREATE-CONNECTION'"
-            :disabled="testing"
-            title="Create connection"
-            :form="$refs.form ? $refs.form.id : null">
-            <i class="material-icons">done</i>
-         </button>
-         <!-- <button class="fab --raised"
-            @click="action='TEST-CONNECTION'"
-            :disabled="testing"
-            title="Test connection"
-            :form="$refs.form ? $refs.form.id : null">
-            <i class="material-icons" v-if="!testing">swap_horiz</i>
-            <md-progress-spinner v-else md-mode="indeterminate" md-diameter="22" md-stroke="3"/>
-         </button> -->
-      </ul>
+      </v-faded-viewport>
+
+
+      <!-- * FABs * -->
+      <v-fab-group>
+
+         <template slot="main">
+            <!-- * Create connection * -->
+            <v-fab-button class="-create-connection"
+                          type="submit"
+                          @click="action='CREATE-CONNECTION'"
+                          :disabled="testing"
+                          title="Create connection"
+                          :form="$refs.form ? $refs.form.id : null">
+               <i class="material-icons">done</i>
+            </v-fab-button>
+         </template>
+
+      </v-fab-group>
+<!--      -->
+<!--      <ul class="fab-list">-->
+<!--         <button class="fab &#45;&#45;raised"-->
+<!--            @click="action='CREATE-CONNECTION'"-->
+<!--            :disabled="testing"-->
+<!--            title="Create connection"-->
+<!--            :form="$refs.form ? $refs.form.id : null">-->
+<!--            <i class="material-icons">done</i>-->
+<!--         </button>-->
+<!--         &lt;!&ndash; <button class="fab &#45;&#45;raised"-->
+<!--            @click="action='TEST-CONNECTION'"-->
+<!--            :disabled="testing"-->
+<!--            title="Test connection"-->
+<!--            :form="$refs.form ? $refs.form.id : null">-->
+<!--            <i class="material-icons" v-if="!testing">swap_horiz</i>-->
+<!--            <md-progress-spinner v-else md-mode="indeterminate" md-diameter="22" md-stroke="3"/>-->
+<!--         </button> &ndash;&gt;-->
+<!--      </ul>-->
    </div>
 </template>
 
@@ -70,16 +102,19 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import UIMessage from '/app/ui-messages/ui-message'
-import Connection from '../connection.esm'
-import SavedConnection from '../saved-connection'
+import UIMessage                  from '/app/ui-messages/ui-message'
+import Connection                 from '../connection.esm'
+import SavedConnection            from '../saved-connection'
+import VApuSectionHeader          from '../../../infra/ui/v-apu-section-header';
+import VFadedViewport             from '../../../infra/ui/v-faded-viewport';
+import VFabButton                 from '../../../infra/ui/v-fab-button';
+import VFabGroup                  from '../../../infra/ui/v-fab-group';
 
 export default {
 
    name: 'v-connection-creator-view',
-
-
-   data(){
+	components: { VFabGroup, VFabButton, VFadedViewport, VApuSectionHeader },
+	data(){
       return {
          action: null,
          testing: false,
@@ -213,7 +248,47 @@ export default {
 
 
 <style>
-.v-connection-creator-view > .-create-connection-form{
+.v-connection-creator-view{
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+}
+
+
+/**
+ * Header
+ */
+.v-connection-creator-view > .-header{
+   position: absolute;
+   z-index: 4;
+}
+
+.v-connection-creator-view > .-header .-header-title > .-title{
+   cursor: default;
+}
+.v-connection-creator-view > .-header .-header-title > .-title > .-name{
+   font-size: 1.2em;
+}
+
+
+
+.v-connection-creator-view > .-main{
+   flex-grow: 1;
+   height: 100%;
+}
+.v-connection-creator-view > .-main .-main-content{
+   display: flex;
+   flex-direction: column;
+
+   padding-top: 4.5rem;
+   padding-bottom: 5rem;
+
+   overflow: auto;
+}
+
+
+
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form{
    display: grid;
    grid-template-columns: 1fr 1fr;
    grid-column-gap: 1em;
@@ -225,34 +300,30 @@ export default {
       'manager     channel'
       'username    password';
 
-   padding: 1rem var(--h-padding) 6rem var(--h-padding);
+   padding: 0 var(--h-padding);
 }
-.v-connection-creator-view > .-create-connection-form > .field.-name{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-name{
    grid-area: name;
 }
-.v-connection-creator-view > .-create-connection-form > .field.-description{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-description{
    grid-area: description;
 }
-.v-connection-creator-view > .-create-connection-form > .field.-host{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-host{
    grid-area: host;
 }
-.v-connection-creator-view > .-create-connection-form > .field.-port{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-port{
    grid-area: port;
 }
-.v-connection-creator-view > .-create-connection-form > .field.-queue-manager{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-queue-manager{
    grid-area: manager;
 }
-.v-connection-creator-view > .-create-connection-form > .field.-channel{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-channel{
    grid-area: channel;
 }
-.v-connection-creator-view > .-create-connection-form > .field.-username{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-username{
    grid-area: username;
 }
-.v-connection-creator-view > .-create-connection-form > .field.-password{
+.v-connection-creator-view > .-main .-main-content > .-create-connection-form > .field.-password{
    grid-area: password;
-}
-
-.v-connection-creator-view > .fab-list{
-   --md-theme-default-primary: var(--accent-fg--base);
 }
 </style>

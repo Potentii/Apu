@@ -1,4 +1,6 @@
 import Vue from 'vue'
+
+
 import {
 	MdProgress,
 	MdButton,
@@ -9,7 +11,8 @@ import {
 	MdMenuItem,
 	MdMenuContent,
 	MdList,
-	MdHighlightText
+	MdHighlightText,
+	MdCheckbox,
 
 } from 'vue-material/dist/components'
 // import * as VueMaterial from 'vue-material/dist/components'
@@ -24,3 +27,4 @@ Vue.use(MdMenu);
 Vue.use(MdHighlightText);
 Vue.use(MdField);
 Vue.use(MdList);
+Vue.use(MdCheckbox);

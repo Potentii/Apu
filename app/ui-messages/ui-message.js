@@ -12,6 +12,12 @@ const ACTION = Object.freeze({
    UNDO: 'UNDO'
 });
 
+const LIFE = Object.freeze({
+   SHORT: 4000,
+   LONG: 8000,
+   SUPER_LONG: 16000
+});
+
 export default class UIMessage extends EventEmitter {
    constructor(severity, title, description, life){
       super();
@@ -48,6 +54,10 @@ export default class UIMessage extends EventEmitter {
 
    static get ACTION(){
       return ACTION;
+   }
+
+   static get LIFE(){
+      return LIFE;
    }
 
    hasAction(action_name){

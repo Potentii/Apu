@@ -105,6 +105,21 @@ export default {
 
 
 /**
+ * Setting the default app typography
+ */
+:root{
+   font-family: 'Roboto', sans-serif;
+   font-size: 16px;
+   /* -webkit-font-smoothing: antialiased; */
+}
+
+:root .material-icons{
+   font-display: swap;
+}
+
+
+
+/**
  * Setting the default color
  */
 body{
@@ -130,7 +145,7 @@ body{
    font-family: 'Roboto', sans-serif;
 
    background-color: var(--blank-bg--base);
-   background-image: url('../infra/style/resources/images/noise.png');
+   background-image: url('../resources/images/noise.png');
    background-blend-mode: hard-light;
    background-repeat: repeat;
 
@@ -138,7 +153,8 @@ body{
    --fab-foreground-color: var(--accent-fg--base);
 }
 
-.app .-app-content > .-messages-dispatcher{
-   z-index: 10;
+.app .v-fab-button{
+   --v-fab-button-color: var(--m-green-a400);
+   --v-fab-button-text-color: var(--m-grey-100);
 }
 </style>

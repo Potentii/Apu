@@ -32,6 +32,19 @@ export default {
          state.saved_connections.push(new_saved_connection);
       },
 
+      removeSavedConnection(state, saved_connection){
+         if(!(saved_connection instanceof SavedConnection))
+            throw new TypeError(`The "saved connection" must be a SavedConnection`);
+
+         const index_to_remove = (state.saved_connections || [])
+            .findIndex(c => c.equals(saved_connection));
+
+         if(index_to_remove < 0)
+            throw new Error(`Cannot remove saved connection: connection ${saved_connection.id} not found`);
+
+         state.saved_connections.splice(index_to_remove, 1);
+      },
+
       setSavedConnections(state, saved_connections){
          if(!Array.isArray(saved_connections))
             throw new TypeError(`The "saved_connections" must be an array of SavedConnection`);
@@ -64,6 +77,11 @@ export default {
       async createNewSavedConnection({ commit }, new_saved_connection){
          await cache.addConnection(new_saved_connection);
          commit('addSavedConnection', new_saved_connection);
+      },
+
+      async removeSavedConnection({ commit }, saved_connection){
+         await cache.removeConnection(saved_connection);
+         commit('removeSavedConnection', saved_connection);
       }
    }
 };

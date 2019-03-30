@@ -107,7 +107,8 @@ export default {
    user-select: none;
    cursor: default;
 
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
    letter-spacing: 0.06em;
    font-size: 1rem;
 }
@@ -121,7 +122,8 @@ export default {
    flex-direction: row;
    align-items: center;
 
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
    letter-spacing: 0.06em;
    font-size: 1rem;
 }

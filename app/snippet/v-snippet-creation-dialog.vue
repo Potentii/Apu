@@ -201,7 +201,8 @@ export default {
 
 .v-snippet-creation-dialog > .-dialog-window .-header-title{
    display: inline-block;
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
    font-size: 20px;
 }
 </style>

@@ -118,7 +118,8 @@ export default {
 }
 .v-ask-dialog > .-dialog-window .-header-text{
    display: inline-block;
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
    font-size: 20px;
 }
 .v-ask-dialog > .-dialog-window .-content-text{

@@ -51,7 +51,8 @@ export default {
 }
 .v-dialog-controls > .-control.--positive .md-button-content > .-label,
 .v-dialog-controls > .-control.--negative .md-button-content > .-label{
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
 }
 
 

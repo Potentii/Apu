@@ -82,16 +82,24 @@
          </v-faded-viewport>
 
 
-         <!-- * FABs list * -->
-         <ul class="fab-list">
+         <!-- * FABs * -->
+         <v-fab-group class="-fabs">
 
-            <!-- * Send message FAB * -->
-            <button class="fab --raised" :form="$refs.form ? $refs.form.id : null" :disabled="states.is('sending') || !valid">
-               <i class="material-icons" v-if="states.not('sending')">send</i>
-               <span class="-spinner" v-else><md-progress-spinner md-mode="indeterminate" :md-diameter="28" :md-stroke="3"></md-progress-spinner></span>
-            </button>
+            <template slot="main">
+               <!-- * Send message * -->
+               <v-fab-button class="-send-message"
+                             title="Send message"
+                             type="submit"
+                             :form="$refs.form ? $refs.form.id : null"
+                             :disabled="states.is('sending') || !valid">
+                  <i class="material-icons" v-if="states.not('sending')">send</i>
+                  <span class="-spinner" v-else>
+                     <md-progress-spinner md-mode="indeterminate" :md-diameter="28" :md-stroke="3"></md-progress-spinner>
+                  </span>
+               </v-fab-button>
+            </template>
 
-         </ul>
+         </v-fab-group>
 
       </template>
 
@@ -121,14 +129,20 @@ import VApuIndicator     from '/infra/ui/v-apu-indicator';
 import SnippetVO         from '../../snippet/snippet-vo';
 import AskButtonInfo     from '../../../infra/ui/dialogs/ask-button-info';
 import VFadedViewport    from '../../../infra/ui/v-faded-viewport';
+import VFabGroup         from '../../../infra/ui/v-fab-group';
+import VFabButton        from '../../../infra/ui/v-fab-button';
 
 
 
 export default {
 
    name: 'v-message-sender-view',
-	components: { VFadedViewport, VApuIndicator, VApuSectionHeader, VSnippetsCombobox },
-	mixins: [
+
+
+	components: { VFabButton, VFabGroup, VFadedViewport, VApuIndicator, VApuSectionHeader, VSnippetsCombobox },
+
+
+   mixins: [
       ConnectionResolverMixin,
       QueueResolverMixin
    ],
@@ -420,15 +434,11 @@ export default {
 
 
 
-.v-message-sender-view > .fab-list{
-   z-index: 8;
-}
-
-.v-message-sender-view > .fab-list > .fab > .-spinner{
+.v-message-sender-view > .-fabs .-send-message .-spinner{
    display: flex;
    align-content: center;
 }
-.v-message-sender-view > .fab-list > .fab > .-spinner .md-progress-spinner{
+.v-message-sender-view > .-fabs .-send-message .-spinner .md-progress-spinner{
    --md-theme-default-primary: var(--m-grey-100);
 }
 </style>

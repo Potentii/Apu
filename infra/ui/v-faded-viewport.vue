@@ -64,7 +64,7 @@ export default {
    width: 100%;
    height: 3rem;
    background-color: var(--blank-bg--base);
-   background-image: url('/infra/style/resources/images/noise.png');
+   background-image: url('../../resources/images/noise.png');
    background-blend-mode: hard-light;
    background-repeat: repeat;
 

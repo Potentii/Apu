@@ -59,13 +59,15 @@ export default {
       'content'
       'footer'
    ;
+   flex-direction: column;
+
 
    justify-content: stretch;
 
    width: 100%;
    height: 100%;
 
-   padding: 1.3em 1.5em;
+   padding: 1.3em 0;
 
    background-color: var(--blank-bg--base);
    border-radius: 10px;
@@ -90,11 +92,16 @@ export default {
    cursor: default;
    user-select: none;
    margin-bottom: 1.5em;
+   padding: 0 1.5em;
 }
 
-
+.v-dialog-window > .-content{
+   overflow-y: auto;
+   padding: 0 1.5em;
+}
 
 .v-dialog-window > .-footer{
    margin-top: 2em;
+   padding: 0 1.5em;
 }
 </style>

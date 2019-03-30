@@ -35,6 +35,9 @@
             <span>No queues found</span>
          </div>
 
+         <div class="-empty" v-else-if="states.not('loading') && !getQueuesOfConnection(selected_saved_connection).length">
+            <span>No queues to show</span>
+         </div>
 
          <div class="-list-group -starred" v-if="getStarredQueuesOfConnection(selected_saved_connection).length">
             <v-queues-list class="-list" name="Favorite" :queues="getStarredQueuesOfConnection(selected_saved_connection)"/>
@@ -63,9 +66,9 @@ import QueuesList              from './v-queues-list'
 import ConnectionResolverMixin from '/app/connection/v-connection-resolver-mixin'
 import UIMessage               from '/app/ui-messages/ui-message'
 import TimeoutError            from '/infra/timeout-error'
-import States                  from '/infra/states/states';
-import VApuSectionHeader       from '../../../infra/ui/v-apu-section-header';
-import VFadedViewport          from '../../../infra/ui/v-faded-viewport';
+import States                  from '/infra/states/states'
+import VApuSectionHeader       from '/infra/ui/v-apu-section-header'
+import VFadedViewport          from '/infra/ui/v-faded-viewport'
 
 
 
@@ -196,6 +199,25 @@ export default {
    overflow: auto;
 }
 
+.v-queues-view > .-main .-main-content > .-empty{
+   cursor: default;
+   user-select: none;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 0 var(--h-padding);
+}
+.v-queues-view > .-main .-main-content > .-empty > span{
+   display: inline-block;
+   font-size: 16px;
+   padding: 0.6em 1.5em;
+   background-color: var(--m-grey-50);
+   border-radius: 3em;
+   box-shadow: 0 3px 10px -2px rgba(0,0,0,0.15);
+}
+.v-queues-view > .-main .-main-content > .-empty + .-empty{
+   margin-top: 1em;
+}
 .v-queues-view > .-main .-main-content > .-list-group + .-list-group{
    margin-top: 1em;
 }

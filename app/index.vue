@@ -1,6 +1,8 @@
 <template>
    <div class="index-page">
 
+      <div class="-version" title="Apu (v1.1.0-release)">v1.1.0</div>
+
       <!-- * Navigation breadcrumb * -->
       <nav class="-nav text--ui-label">
 
@@ -73,6 +75,20 @@ export default {
    --h-padding: 1rem;
 }
 
+.index-page > .-version{
+   cursor: default;
+   user-select: none;
+   position: absolute;
+   top: 0.5em;
+   right: 0.5em;
+
+   font-size: 8px;
+   color: var(--m-grey-400);
+
+   z-index: 8;
+
+}
+
 
 /**
  * Breadcrumb
@@ -110,7 +126,8 @@ export default {
    color: var(--m-grey-900);
 } .index-page > .-nav > .-item.-logo{
    font-size: 1.3em;
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
    color: var(--m-grey-900);
 } .index-page > .-nav > .-item:not(.-logo){
    text-transform: uppercase;
@@ -158,10 +175,12 @@ export default {
 }
 
 .index-page > .-nav > .-item:last-of-type > .-label{
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
 }
 .index-page > .-nav > .-item:hover > .-label{
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
 }
 
 

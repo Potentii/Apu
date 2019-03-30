@@ -106,7 +106,8 @@ export default {
 }
 
 .v-loading-page > .-content > .-message{
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
    color: var(--blank-fg--base);
    font-size: 1.4em;
    text-shadow: 0 2px 8px rgba(0,0,0,0.2);

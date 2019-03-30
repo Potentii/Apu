@@ -108,7 +108,8 @@ export default {
 .v-queues-list > .-title > .-name{
    display: inline-block;
    margin-right: 0.5em;
-   font-family: 'Roboto Medium', sans-serif;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
    font-size: 16px;
 }
 .v-queues-list > .-title > .-count{

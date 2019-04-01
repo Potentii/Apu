@@ -3,6 +3,7 @@
       <router-link
          class="-connection"
          tag="li"
+         :key="saved_connection.id"
          :to="'/index/connections/' + saved_connection.name + '/queues'"
          v-for="saved_connection in connections">
 

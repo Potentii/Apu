@@ -193,6 +193,7 @@ export default {
 				const connection_names = this.saved_connections.map(c => c.name);
 				for(let conn of connections_to_import){
 					conn.name = naming_util.getWithNamingVersionSuffix(connection_names, conn.name);
+					conn._id = conn.name;
 					connection_names.push(conn.name);
 				}
 

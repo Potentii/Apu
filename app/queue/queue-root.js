@@ -1,9 +1,9 @@
-import * as cache           from '/infra/cache/util'
 import QueueVO              from './queue-vo';
 import * as queues_list_ipc from './list/ipc';
+const cache = nodeRequire('@potentii/app-data');
 
 
-const QUEUES_DATA_FILE = 'queues.json';
+const QUEUES_DATA_FILE = 'queues';
 
 
 export default class QueueRoot{

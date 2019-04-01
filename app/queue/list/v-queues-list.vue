@@ -6,6 +6,7 @@
       </div>
       <router-link
          class="-item"
+         :key="queue.id"
          tag="li"
          :to="'/index/connections/' + queue.connection_id + '/queues/' + queue._id + '/messages/send'"
          v-for="queue in queues">

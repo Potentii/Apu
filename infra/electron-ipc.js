@@ -1,5 +1,5 @@
 import TimeoutError from './timeout-error'
-const { ipcRenderer } = nodeRequire('electron');
+const { ipcRenderer } = electronRequire('electron');
 
 export function send(channel, data, timeout = 0){
    return new Promise((resolve, reject) => {

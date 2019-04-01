@@ -1,4 +1,4 @@
-const remote = nodeRequire('electron').remote;
+const remote = electronRequire('electron').remote;
 
 
 export function prompt(options={}){

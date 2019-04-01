@@ -21,10 +21,11 @@
       <link rel="stylesheet" href="./infra/style/elements/field.css">
       <script>
       if(typeof require === 'function'){
-         window.nodeRequire = require;
+         window.electronRequire = require;
          delete window.require;
          delete window.exports;
          delete window.module;
+			window.nodeRequire = electronRequire('electron').remote.require;
       }
       </script>
 

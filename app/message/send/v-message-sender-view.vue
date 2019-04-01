@@ -20,38 +20,38 @@
             <!-- * Model controls * -->
             <div class="-controls" slot="content">
 
-               <v-btn class="-control -save"
-                      v-if="!!selected_snippet"
-                      :disabled="!has_changes"
-                      @click="updateSnippetContent"
-                      dense
-                      flat
-                      title="Save this model">
+               <!-- * Save snippet * -->
+               <md-button class="-control -save"
+                          v-if="!!selected_snippet"
+                          :disabled="!has_changes"
+                          @click="updateSnippetContent"
+                          title="Save this model">
                   Save
-               </v-btn>
+               </md-button>
 
-               <v-btn class="-control -new"
-                      @click="openSnippetCreationDialog"
-                      dense
-                      flat
-                      title="Create a new model">
+               <!-- * New snippet * -->
+               <md-button class="-control -new"
+                          @click="openSnippetCreationDialog"
+                          title="Create a new model">
                   {{ hasAnySnippet() ? 'New' : 'Create new model' }}
-               </v-btn>
+               </md-button>
 
+               <!-- * Select snippet * -->
                <v-snippets-combobox class="-control -snippets"
                                     v-if="hasAnySnippet()"
                                     v-model="selected_snippet"
                                     title="Load a model">
                </v-snippets-combobox>
 
-               <v-btn class="-control -delete"
-                      v-if="!!selected_snippet"
-                      @click="openDeleteSnippetDialog"
-                      dense
-                      flat
-                      title="Remove this model">
+               <!-- * Delete snippet * -->
+               <md-button class="-control -delete"
+                          v-if="!!selected_snippet"
+                          @click="openDeleteSnippetDialog"
+                          dense
+                          flat
+                          title="Remove this model">
                   <i class="material-icons">delete</i>
-               </v-btn>
+               </md-button>
 
             </div>
 
@@ -381,6 +381,10 @@ export default {
 .v-message-sender-view > .-header .-header-content > .-controls > .-control.v-menu > .v-menu__activator > *{
    border-radius: 3rem;
    min-width: max-content;
+}
+.v-message-sender-view > .-header .-header-content > .-controls > .-control.md-button .md-ripple{
+   padding-left: 1.5em;
+   padding-right: 1.5em;
 }
 
 .v-message-sender-view > .-header .-header-content > .-controls > .-delete{

@@ -1,6 +1,6 @@
 /**
  *
- * @param  {String} res [description]
+ * @param  {Object} res [description]
  * @return {[type]}     [description]
  */
 module.exports.parseData = function(res){

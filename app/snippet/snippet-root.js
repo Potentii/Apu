@@ -1,8 +1,9 @@
-import * as cache from '/infra/cache/util'
-import SnippetVO  from './snippet-vo'
+import SnippetVO from './snippet-vo'
+const cache = nodeRequire('@potentii/app-data');
 
 
-const SNIPPETS_DATA_FILE = 'snippets.json';
+
+const SNIPPETS_DATA_FILE = 'snippets';
 
 
 export default class SnippetRoot{

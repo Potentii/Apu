@@ -8,23 +8,19 @@ import                   './infra/plugins/id'
 import                   './infra/plugins/vue-shortkey'
 import                   './infra/style/vue-material/loader'
 import                   './infra/style/vuetify/loader'
-import * as updates from './data/update-migration/migration'
 
+const cache = nodeRequire('@potentii/app-data');
 
-Vue.config.productionTip = true;
+Vue.config.productionTip = false;
 
 Vue.use(DialogPlugin, { store });
 
 (async () => {
-
-   await updates.execute();
-
+   cache.setAppName('Apu');
 
    new Vue({
       router,
       store,
       render: h => h(App)
    }).$mount('#application');
-
-
 })();

@@ -1,6 +1,7 @@
-import Connection from './connection.esm'
-import SavedConnection from './saved-connection'
-import * as cache from './cache'
+import SavedConnection     from './saved-connection'
+import SavedConnectionRoot from './saved-connection-root';
+
+
 
 export default {
    namespaced: true,
@@ -69,18 +70,19 @@ export default {
 
    actions: {
       async refreshSavedConnectionsFromCache({ commit }){
-         const connections = await cache.getAllConnections();
+         const connections = await SavedConnectionRoot.getAll();
          commit('setSavedConnections', connections);
       },
 
 
       async createNewSavedConnection({ commit }, new_saved_connection){
-         await cache.addConnection(new_saved_connection);
+         await SavedConnectionRoot.add(new_saved_connection);
          commit('addSavedConnection', new_saved_connection);
       },
 
+
       async removeSavedConnection({ commit }, saved_connection){
-         await cache.removeConnection(saved_connection);
+         await SavedConnectionRoot.remove(saved_connection);
          commit('removeSavedConnection', saved_connection);
       }
    }

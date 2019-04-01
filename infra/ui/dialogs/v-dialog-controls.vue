@@ -59,12 +59,13 @@ export default {
 .v-dialog-controls > .-control.md-button{
    min-width: 64px;
    margin: 0;
-   padding-left: 1em;
-   padding-right: 1em;
-
    border-radius: 5em;
 }
+.v-dialog-controls > .-control.md-button + .-control.md-button{
+   margin-left: 1em;
+}
 .v-dialog-controls > .-control.md-button .md-ripple{
-   padding: 0;
+   padding-left: 1em;
+   padding-right: 1em;
 }
 </style>

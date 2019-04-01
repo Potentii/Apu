@@ -8,24 +8,42 @@
     "parcel-build": "parcel build index.html --out-dir ./output/parcel-build --out-file index.html --public-url ./ --target browser --no-cache --no-minify",
     "start-electron": "electron ./infra/electron.js",
     "dist": "electron-builder",
-    "dist2": "build"
+    "dist2": "build",
+    "test": "mocha ./tests/all.js"
   },
   "build": {
     "appId": "com.potentii.apu",
     "productName": "Apu",
+    "copyright": "Copyright (c) 2018-2019 Guilherme Reginaldo Ruella",
+    "compression": "maximum",
     "win": {
       "target": [
         "nsis"
       ]
     },
     "files": [
-      "!java${/*}"
+      "!java${/*}",
+      "!*.xd",
+      "!/.git",
+      "!/.idea",
+      "!/resources",
+      "!/tests",
+      "!/project",
+      "!/data",
+      "!/output/electron-dist",
+      "!/output/parcel-serve",
+      "!/output/parcel-serve-cache"
     ],
-    "extraResources": {
-      "from": "java",
-      "to": "java"
-    },
-    "asarUnpack": "java",
+    "extraResources": [
+      {
+        "from": "./java",
+        "to": "./java"
+      },
+      {
+        "from": "./.env",
+        "to": "./.env"
+      }
+    ],
     "directories": {
       "output": "./output/electron-dist",
       "buildResources": "build-electron",
@@ -36,11 +54,6 @@
     },
     "asar": true
   },
-  "files": [
-    "*.js",
-    "node_modules",
-    "build"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Potentii/Apu.git"
@@ -54,10 +67,12 @@
   "homepage": "https://github.com/Potentii/Apu#readme",
   "dependencies": {
     "@babel/runtime": "7.2.0",
+    "@potentii/app-data": "1.0.1",
     "dotenv": "6.2.0",
     "electron-localshortcut": "3.1.0",
     "ipc-bridge-nodejs": "1.0.3",
     "mkdirp": "0.5.1",
+    "semver": "6.0.0",
     "vue": "2.5.21",
     "vue-material": "1.0.0-beta-10.2",
     "vue-mdc-adapter": "0.18.2",

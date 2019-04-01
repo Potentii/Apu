@@ -1,4 +1,4 @@
-const EventEmitter = nodeRequire('events');
+const EventEmitter = electronRequire('events');
 
 const SEVERITY = Object.freeze({
    ERROR: 'ERROR',

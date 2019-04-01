@@ -15,7 +15,9 @@
 
 <script>
 import { mapMutations, mapActions } from 'vuex'
-import QueueRoot                    from './queue/queue-root';
+import QueueRoot                    from './queue/queue-root'
+import * as all_migrations          from '/data/migrations/version/renderer/all'
+import UIMessage                    from './ui-messages/ui-message';
 
 
 
@@ -40,6 +42,7 @@ export default {
 		...mapMutations('queue', [ 'setQueues' ]),
       ...mapActions('connection', [ 'refreshSavedConnectionsFromCache' ]),
 		...mapActions('snippet', [ 'loadSnippetsFromCache' ]),
+		...mapActions('ui-messages', { 'addUIMessage': 'addMessage' }),
 
 
       async loadPreferences(){
@@ -48,26 +51,40 @@ export default {
 
 
       async load(){
-         this.message = 'Loading preferences';
-         await this.loadPreferences();
-         this.message = 'Loading saved connections';
-         await this.refreshSavedConnectionsFromCache();
-			this.message = 'Loading saved models';
-			await this.loadSnippetsFromCache();
+			try{
+            this.message = 'Migrating data';
+            await this._processVersionMigrations();
+            this.message = 'Loading preferences';
+            await this.loadPreferences();
+            this.message = 'Loading saved connections';
+            await this.refreshSavedConnectionsFromCache();
+            this.message = 'Loading saved models';
+            await this.loadSnippetsFromCache();
 
+            this.setQueues(await QueueRoot.loadQueuesFromCache());
 
-         this.setQueues(await QueueRoot.loadQueuesFromCache());
+            const redirect_to = this.$route.params.redirect_to;
+            if(redirect_to)
+               this.$router.replace({
+                  name: redirect_to.name,
+                  params: redirect_to.params,
+                  hash: redirect_to.hash,
+                  query: redirect_to.query
+               });
+            else
+               this.$router.push({ name: 'connections' });
+			} catch(err){
+				console.error(err);
+				this.addUIMessage(new UIMessage(UIMessage.ERROR, `Loading error:`, `${err.message}`, UIMessage.LIFE.LONG));
+			}
+      },
 
-         const redirect_to = this.$route.params.redirect_to;
-         if(redirect_to)
-            this.$router.replace({
-               name: redirect_to.name,
-               params: redirect_to.params,
-               hash: redirect_to.hash,
-               query: redirect_to.query
-            });
-         else
-            this.$router.push({ name: 'connections' });
+      async _processVersionMigrations(){
+			try{
+				await all_migrations.migrate();
+         } catch(err){
+            throw new Error(`Error while migrating data: ${err.message}`);
+         }
       }
    }
 }
